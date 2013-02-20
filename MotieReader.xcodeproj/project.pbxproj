@@ -1,0 +1,431 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C39580E116D4100C009EE15E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C39580E016D4100C009EE15E /* UIKit.framework */; };
+		C39580E316D4100C009EE15E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C39580E216D4100C009EE15E /* Foundation.framework */; };
+		C39580E516D4100C009EE15E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C39580E416D4100C009EE15E /* CoreGraphics.framework */; };
+		C39580E716D4100C009EE15E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C39580E616D4100C009EE15E /* CoreData.framework */; };
+		C39580ED16D4100C009EE15E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C39580EB16D4100C009EE15E /* InfoPlist.strings */; };
+		C39580EF16D4100C009EE15E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C39580EE16D4100C009EE15E /* main.m */; };
+		C39580F316D4100C009EE15E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C39580F216D4100C009EE15E /* AppDelegate.m */; };
+		C39580F516D4100C009EE15E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = C39580F416D4100C009EE15E /* Default.png */; };
+		C39580F716D4100C009EE15E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C39580F616D4100C009EE15E /* Default@2x.png */; };
+		C39580F916D4100C009EE15E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C39580F816D4100C009EE15E /* Default-568h@2x.png */; };
+		C39580FC16D4100C009EE15E /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C39580FA16D4100C009EE15E /* MainStoryboard_iPhone.storyboard */; };
+		C39580FF16D4100C009EE15E /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C39580FD16D4100C009EE15E /* MainStoryboard_iPad.storyboard */; };
+		C395810216D4100C009EE15E /* MotieReader.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C395810016D4100C009EE15E /* MotieReader.xcdatamodeld */; };
+		C395810516D4100C009EE15E /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C395810416D4100C009EE15E /* MasterViewController.m */; };
+		C395810816D4100C009EE15E /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C395810716D4100C009EE15E /* DetailViewController.m */; };
+		C395811516D4110C009EE15E /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = C395811016D4110C009EE15E /* TFHpple.m */; };
+		C395811616D4110C009EE15E /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C395811216D4110C009EE15E /* TFHppleElement.m */; };
+		C395811716D4110C009EE15E /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C395811416D4110C009EE15E /* XPathQuery.m */; };
+		C395811916D4115F009EE15E /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C395811816D4115F009EE15E /* libxml2.dylib */; };
+		C395811F16D411B2009EE15E /* Contributor.m in Sources */ = {isa = PBXBuildFile; fileRef = C395811C16D411B2009EE15E /* Contributor.m */; };
+		C395812016D411B2009EE15E /* Tutorial.m in Sources */ = {isa = PBXBuildFile; fileRef = C395811E16D411B2009EE15E /* Tutorial.m */; };
+		C395812516D41690009EE15E /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = C395812416D41690009EE15E /* MBProgressHUD.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		C39580DD16D4100C009EE15E /* MotieReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MotieReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C39580E016D4100C009EE15E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		C39580E216D4100C009EE15E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		C39580E416D4100C009EE15E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		C39580E616D4100C009EE15E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		C39580EA16D4100C009EE15E /* MotieReader-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MotieReader-Info.plist"; sourceTree = "<group>"; };
+		C39580EC16D4100C009EE15E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C39580EE16D4100C009EE15E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C39580F016D4100C009EE15E /* MotieReader-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MotieReader-Prefix.pch"; sourceTree = "<group>"; };
+		C39580F116D4100C009EE15E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		C39580F216D4100C009EE15E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		C39580F416D4100C009EE15E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		C39580F616D4100C009EE15E /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		C39580F816D4100C009EE15E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		C39580FB16D4100C009EE15E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		C39580FE16D4100C009EE15E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		C395810116D4100C009EE15E /* MotieReader.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MotieReader.xcdatamodel; sourceTree = "<group>"; };
+		C395810316D4100C009EE15E /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
+		C395810416D4100C009EE15E /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
+		C395810616D4100C009EE15E /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		C395810716D4100C009EE15E /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		C395810F16D4110C009EE15E /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
+		C395811016D4110C009EE15E /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
+		C395811116D4110C009EE15E /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHppleElement.h; sourceTree = "<group>"; };
+		C395811216D4110C009EE15E /* TFHppleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHppleElement.m; sourceTree = "<group>"; };
+		C395811316D4110C009EE15E /* XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPathQuery.h; sourceTree = "<group>"; };
+		C395811416D4110C009EE15E /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPathQuery.m; sourceTree = "<group>"; };
+		C395811816D4115F009EE15E /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		C395811B16D411B2009EE15E /* Contributor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contributor.h; sourceTree = "<group>"; };
+		C395811C16D411B2009EE15E /* Contributor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contributor.m; sourceTree = "<group>"; };
+		C395811D16D411B2009EE15E /* Tutorial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tutorial.h; sourceTree = "<group>"; };
+		C395811E16D411B2009EE15E /* Tutorial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tutorial.m; sourceTree = "<group>"; };
+		C395812316D41690009EE15E /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		C395812416D41690009EE15E /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C39580DA16D4100C009EE15E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C395811916D4115F009EE15E /* libxml2.dylib in Frameworks */,
+				C39580E116D4100C009EE15E /* UIKit.framework in Frameworks */,
+				C39580E316D4100C009EE15E /* Foundation.framework in Frameworks */,
+				C39580E516D4100C009EE15E /* CoreGraphics.framework in Frameworks */,
+				C39580E716D4100C009EE15E /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C39580D416D4100C009EE15E = {
+			isa = PBXGroup;
+			children = (
+				C395812116D41674009EE15E /* Util */,
+				C39580E816D4100C009EE15E /* MotieReader */,
+				C39580DF16D4100C009EE15E /* Frameworks */,
+				C39580DE16D4100C009EE15E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C39580DE16D4100C009EE15E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C39580DD16D4100C009EE15E /* MotieReader.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C39580DF16D4100C009EE15E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C395811816D4115F009EE15E /* libxml2.dylib */,
+				C39580E016D4100C009EE15E /* UIKit.framework */,
+				C39580E216D4100C009EE15E /* Foundation.framework */,
+				C39580E416D4100C009EE15E /* CoreGraphics.framework */,
+				C39580E616D4100C009EE15E /* CoreData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C39580E816D4100C009EE15E /* MotieReader */ = {
+			isa = PBXGroup;
+			children = (
+				C395812616D42A69009EE15E /* CoreData */,
+				C395811A16D41191009EE15E /* Modal */,
+				C395810E16D410E9009EE15E /* hpple */,
+				C39580F116D4100C009EE15E /* AppDelegate.h */,
+				C39580F216D4100C009EE15E /* AppDelegate.m */,
+				C39580FA16D4100C009EE15E /* MainStoryboard_iPhone.storyboard */,
+				C39580FD16D4100C009EE15E /* MainStoryboard_iPad.storyboard */,
+				C395810316D4100C009EE15E /* MasterViewController.h */,
+				C395810416D4100C009EE15E /* MasterViewController.m */,
+				C395810616D4100C009EE15E /* DetailViewController.h */,
+				C395810716D4100C009EE15E /* DetailViewController.m */,
+				C395810016D4100C009EE15E /* MotieReader.xcdatamodeld */,
+				C39580E916D4100C009EE15E /* Supporting Files */,
+			);
+			path = MotieReader;
+			sourceTree = "<group>";
+		};
+		C39580E916D4100C009EE15E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C39580EA16D4100C009EE15E /* MotieReader-Info.plist */,
+				C39580EB16D4100C009EE15E /* InfoPlist.strings */,
+				C39580EE16D4100C009EE15E /* main.m */,
+				C39580F016D4100C009EE15E /* MotieReader-Prefix.pch */,
+				C39580F416D4100C009EE15E /* Default.png */,
+				C39580F616D4100C009EE15E /* Default@2x.png */,
+				C39580F816D4100C009EE15E /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C395810E16D410E9009EE15E /* hpple */ = {
+			isa = PBXGroup;
+			children = (
+				C395810F16D4110C009EE15E /* TFHpple.h */,
+				C395811016D4110C009EE15E /* TFHpple.m */,
+				C395811116D4110C009EE15E /* TFHppleElement.h */,
+				C395811216D4110C009EE15E /* TFHppleElement.m */,
+				C395811316D4110C009EE15E /* XPathQuery.h */,
+				C395811416D4110C009EE15E /* XPathQuery.m */,
+			);
+			name = hpple;
+			sourceTree = "<group>";
+		};
+		C395811A16D41191009EE15E /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+				C395811B16D411B2009EE15E /* Contributor.h */,
+				C395811C16D411B2009EE15E /* Contributor.m */,
+				C395811D16D411B2009EE15E /* Tutorial.h */,
+				C395811E16D411B2009EE15E /* Tutorial.m */,
+			);
+			name = Modal;
+			sourceTree = "<group>";
+		};
+		C395812116D41674009EE15E /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				C395812216D4167D009EE15E /* MBProgressHUD */,
+			);
+			name = Util;
+			sourceTree = "<group>";
+		};
+		C395812216D4167D009EE15E /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				C395812316D41690009EE15E /* MBProgressHUD.h */,
+				C395812416D41690009EE15E /* MBProgressHUD.m */,
+			);
+			name = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		C395812616D42A69009EE15E /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = CoreData;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C39580DC16D4100C009EE15E /* MotieReader */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C395810B16D4100C009EE15E /* Build configuration list for PBXNativeTarget "MotieReader" */;
+			buildPhases = (
+				C39580D916D4100C009EE15E /* Sources */,
+				C39580DA16D4100C009EE15E /* Frameworks */,
+				C39580DB16D4100C009EE15E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MotieReader;
+			productName = MotieReader;
+			productReference = C39580DD16D4100C009EE15E /* MotieReader.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C39580D516D4100C009EE15E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = Carl;
+			};
+			buildConfigurationList = C39580D816D4100C009EE15E /* Build configuration list for PBXProject "MotieReader" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = C39580D416D4100C009EE15E;
+			productRefGroup = C39580DE16D4100C009EE15E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C39580DC16D4100C009EE15E /* MotieReader */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C39580DB16D4100C009EE15E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C39580ED16D4100C009EE15E /* InfoPlist.strings in Resources */,
+				C39580F516D4100C009EE15E /* Default.png in Resources */,
+				C39580F716D4100C009EE15E /* Default@2x.png in Resources */,
+				C39580F916D4100C009EE15E /* Default-568h@2x.png in Resources */,
+				C39580FC16D4100C009EE15E /* MainStoryboard_iPhone.storyboard in Resources */,
+				C39580FF16D4100C009EE15E /* MainStoryboard_iPad.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C39580D916D4100C009EE15E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C39580EF16D4100C009EE15E /* main.m in Sources */,
+				C39580F316D4100C009EE15E /* AppDelegate.m in Sources */,
+				C395810216D4100C009EE15E /* MotieReader.xcdatamodeld in Sources */,
+				C395810516D4100C009EE15E /* MasterViewController.m in Sources */,
+				C395810816D4100C009EE15E /* DetailViewController.m in Sources */,
+				C395811516D4110C009EE15E /* TFHpple.m in Sources */,
+				C395811616D4110C009EE15E /* TFHppleElement.m in Sources */,
+				C395811716D4110C009EE15E /* XPathQuery.m in Sources */,
+				C395811F16D411B2009EE15E /* Contributor.m in Sources */,
+				C395812016D411B2009EE15E /* Tutorial.m in Sources */,
+				C395812516D41690009EE15E /* MBProgressHUD.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		C39580EB16D4100C009EE15E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C39580EC16D4100C009EE15E /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		C39580FA16D4100C009EE15E /* MainStoryboard_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C39580FB16D4100C009EE15E /* en */,
+			);
+			name = MainStoryboard_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		C39580FD16D4100C009EE15E /* MainStoryboard_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C39580FE16D4100C009EE15E /* en */,
+			);
+			name = MainStoryboard_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C395810916D4100C009EE15E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2/**";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C395810A16D4100C009EE15E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2/**";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C395810C16D4100C009EE15E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MotieReader/MotieReader-Prefix.pch";
+				INFOPLIST_FILE = "MotieReader/MotieReader-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		C395810D16D4100C009EE15E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MotieReader/MotieReader-Prefix.pch";
+				INFOPLIST_FILE = "MotieReader/MotieReader-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C39580D816D4100C009EE15E /* Build configuration list for PBXProject "MotieReader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C395810916D4100C009EE15E /* Debug */,
+				C395810A16D4100C009EE15E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C395810B16D4100C009EE15E /* Build configuration list for PBXNativeTarget "MotieReader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C395810C16D4100C009EE15E /* Debug */,
+				C395810D16D4100C009EE15E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		C395810016D4100C009EE15E /* MotieReader.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				C395810116D4100C009EE15E /* MotieReader.xcdatamodel */,
+			);
+			currentVersion = C395810116D4100C009EE15E /* MotieReader.xcdatamodel */;
+			path = MotieReader.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = C39580D516D4100C009EE15E /* Project object */;
+}
