@@ -54,12 +54,14 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
 
+    self.singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTap:)];
+
     if (self.detailItem) {
 
-        self.detailedWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 44, self.view.frame.size.width, self.view.frame.size.height-88)];
+        self.detailedWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-88)];
 
         self.detailedWebView.delegate = self;
-        
+
         [self addToolBar];
     }
 
@@ -68,20 +70,18 @@
 
 - (void)addToolBar
 {
-    UIToolbar *toolbar = [[UIToolbar alloc] init];
-    toolbar.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
-    NSMutableArray *items = [[NSMutableArray alloc] init];
-    UIBarButtonItem *downloadBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(downloadContent)];
-    [items addObject:downloadBtn];
-//    [items addObject:[[[UIBarButtonItem alloc] initWith....] autorelease]];
-    [toolbar setItems:items animated:NO];
-    [self.view addSubview:toolbar];
+    self.toolbar = [[UIToolbar alloc] init];
+    self.toolbar.frame = CGRectMake(0, self.view.frame.size.height-88, self.view.frame.size.width, 44);
+//    UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+//    UIBarButtonItem *downloadBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(downloadContent)];
+//    [self.toolbar setItems:[NSArray arrayWithObjects:flexibleSpace,downloadBtn, nil]];
+    [self.view addSubview:self.toolbar];
 }
 
 - (void)downloadContent
 {
-    
-    
+
+
 }
 
 - (void)viewDidUnload
@@ -103,7 +103,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"Detail", @"Detail");
     }
     return self;
 }
@@ -115,6 +114,9 @@
     {
         [self loadBook:[request mainDocumentURL]];
         [self loadInfo:[request mainDocumentURL]];
+        self.curURL = [[request mainDocumentURL] absoluteString];
+        [self.view bringSubviewToFront:self.toolbar];
+        [self.chapterInfo setHidden:NO];
         return NO;
     }
     else if ([[[request mainDocumentURL] path] hasPrefix:@"/m/buy/"])
@@ -123,6 +125,14 @@
     }
     else if ([[[request mainDocumentURL] path] hasPrefix:@"/buy/"])
     {
+        if ([self.navigationController isNavigationBarHidden])
+        {
+            [self setMenuHidden:NO];
+        }
+        [self.chapterInfo setHidden:YES];
+        self.prevURL = self.curURL;
+        self.nextURL = nil;
+        [self setBackForward];
         return YES;
     }
     else
@@ -138,7 +148,7 @@
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
     if (!self.progressHUD)
-        [self showProgressHUD:@"loading"];
+        [self showProgressHUD:@"loading" time:0];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
@@ -147,11 +157,13 @@
         [self hideProgressHUD];
 }
 
-- (void)showProgressHUD:(NSString *)message
+- (void)showProgressHUD:(NSString *)message time:(NSUInteger)time
 {
     self.progressHUD = [[MBProgressHUD alloc] initWithView:self.view];
     self.progressHUD.mode = MBProgressHUDModeIndeterminate;
     self.progressHUD.labelText = message;
+    if (time != 0)
+        self.progressHUD.graceTime = time;
     [self.view addSubview:self.progressHUD];
     [self.progressHUD show:YES];
 }
@@ -191,13 +203,30 @@
     }
 
     if (self.textView)
+    {
         [self.textView setHidden:NO];
+    }
     else
-        self.textView = [[UITextView alloc] initWithFrame:self.view.frame];
+    {
+        self.textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 34, self.view.frame.size.width, self.detailedWebView.frame.size.height-34)];
+        self.chapterInfo = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 34)];
+        self.chapterInfo.textAlignment = NSTextAlignmentCenter;
+        [self.chapterInfo setFont:[UIFont fontWithName:@"HelveticaNeue" size:14]];
+        [self.chapterInfo setTextColor:[UIColor whiteColor]];
+        [self.chapterInfo setBackgroundColor:[UIColor blackColor]];
+//        self.chapterInfoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//        self.chapterInfoBtn.backgroundColor = [UIColor blackColor];
+//        [self.chapterInfoBtn setFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+        [self.textView addGestureRecognizer:self.singleTap];
+        self.textView.delegate = self;
+    }
     self.textView.text = chapterContent;
+    [self.textView setContentOffset:CGPointMake(0, 0) animated:YES];
     [self.textView setFont:[UIFont fontWithName:@"HelveticaNeue" size:18]];
     self.textView.editable = NO;
     [self.view addSubview:self.textView];
+//    [self.view addSubview:self.chapterInfoBtn];
+    [self.view addSubview:self.chapterInfo];
     [self.detailedWebView setHidden:YES];
     // 8
     [self.objects addObject:chapterContent];
@@ -233,6 +262,21 @@
         }
     }
 
+    [self setBackForward];
+
+    tutorialsXpathQueryString = @"//div[@id='bd']/h3";
+    tutorialsNodes = [tutorialsParser searchWithXPathQuery:tutorialsXpathQueryString];
+
+    for (TFHppleElement *element in tutorialsNodes)
+    {
+        self.chapterInfo.text = [[element firstChild] content];
+    }
+
+
+}
+
+- (void)setBackForward
+{
     UIBarButtonItem *nextBtn = nil;
     UIBarButtonItem *prevBtn = nil;
     self.navigationItem.rightBarButtonItems = nil;
@@ -240,19 +284,32 @@
     {
         nextBtn = [[UIBarButtonItem alloc] initWithTitle:@"next" style:UIBarButtonItemStyleBordered target:self action:@selector(loadNextChapter)];
     }
+    else
+    {
+        nextBtn = [[UIBarButtonItem alloc] initWithTitle:@"next" style:UIBarButtonItemStyleBordered target:self action:@selector(loadNextChapter)];
+        [nextBtn setEnabled:NO];
+    }
     if (self.prevURL)
     {
         prevBtn = [[UIBarButtonItem alloc] initWithTitle:@"prev" style:UIBarButtonItemStyleBordered target:self action:@selector(loadPrevChapter)];
     }
-
-    if (nextBtn && prevBtn)
-        self.navigationItem.rightBarButtonItems = @[nextBtn, prevBtn];
-    else if (nextBtn && !prevBtn)
-        self.navigationItem.rightBarButtonItem = nextBtn;
-    else if (prevBtn && !nextBtn)
-        self.navigationItem.rightBarButtonItem = prevBtn;
     else
-        self.navigationItem.rightBarButtonItem = nil;
+    {
+        prevBtn = [[UIBarButtonItem alloc] initWithTitle:@"prev" style:UIBarButtonItemStyleBordered target:self action:@selector(loadPrevChapter)];
+        [prevBtn setEnabled:NO];
+    }
+
+    UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    [self.toolbar setItems:[NSArray arrayWithObjects:flexibleSpace,prevBtn,nextBtn, nil]];
+
+//    if (nextBtn && prevBtn)
+//        self.navigationItem.rightBarButtonItems = @[nextBtn, prevBtn];
+//    else if (nextBtn && !prevBtn)
+//        self.navigationItem.rightBarButtonItem = nextBtn;
+//    else if (prevBtn && !nextBtn)
+//        self.navigationItem.rightBarButtonItem = prevBtn;
+//    else
+//        self.navigationItem.rightBarButtonItem = nil;
 }
 
 - (void)loadNextChapter
@@ -272,5 +329,50 @@
     [self.detailedWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"about:blank"]]]];
     [self.detailedWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:URL]]];
 }
+
+#pragma mark gestureRecognizer
+
+- (void)didTap:(UITapGestureRecognizer *)sender
+{
+    CGPoint touchLocation = [sender locationInView:self.textView];
+    CGFloat viewWidth = self.textView.frame.size.width;
+
+    if (touchLocation.x <= viewWidth * 0.25)
+    {
+        [self loadPrevChapter];
+    }
+    else if (touchLocation.x >= viewWidth * 0.75)
+    {
+        [self loadNextChapter];
+    }
+    else
+    {
+        [self setMenuHidden:![self.navigationController isNavigationBarHidden]];
+    }
+}
+
+- (void)setMenuHidden:(BOOL)hidden
+{
+    if (hidden)
+    {
+        [[UIApplication sharedApplication] setStatusBarHidden:YES];
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+        [self.toolbar removeFromSuperview];
+        [self.chapterInfo removeFromSuperview];
+        [self.textView setFrame:CGRectMake(self.textView.frame.origin.x, 0, self.textView.frame.size.width, self.textView.frame.size.height+142)];
+        [self.detailedWebView setFrame:CGRectMake(0, 0, self.detailedWebView.frame.size.width, self.detailedWebView.frame.size.height+108)];
+    }
+    else
+    {
+        [[UIApplication sharedApplication] setStatusBarHidden:NO];
+        [self.view addSubview:self.toolbar];
+        [self.view addSubview:self.chapterInfo];
+        [self.textView setFrame:CGRectMake(self.textView.frame.origin.x, 34, self.textView.frame.size.width, self.textView.frame.size.height-142)];
+        [self.detailedWebView setFrame:CGRectMake(0, 0, self.detailedWebView.frame.size.width, self.detailedWebView.frame.size.height-108)];
+        [self.navigationController setNavigationBarHidden:NO animated:NO];
+    }
+}
+
+#pragma mark UITextView delegate
 
 @end

@@ -107,6 +107,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    self.title = @"Motie";
     [self loadTutorials];
     //    [self loadContributors];
 }
@@ -218,12 +219,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (!self.detailViewController) {
-        self.detailViewController = [[DetailViewController alloc] init];
-    }
+//    if (!self.detailViewController) {
+//        self.detailViewController = [[DetailViewController alloc] init];
+//    }
+    DetailViewController *detailViewController = [[DetailViewController alloc] init];
     NSDate *object = [_objects objectAtIndex:indexPath.row];
-    self.detailViewController.detailItem = object;
-    [self.navigationController pushViewController:self.detailViewController animated:YES];
+    detailViewController.detailItem = object;
+    [self.navigationController pushViewController:detailViewController animated:YES];
 }
 
 @end

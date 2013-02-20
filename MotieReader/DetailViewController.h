@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
 
-@interface DetailViewController : UIViewController <UISplitViewControllerDelegate, UIWebViewDelegate>
+@interface DetailViewController : UIViewController <UISplitViewControllerDelegate, UIWebViewDelegate, UIGestureRecognizerDelegate, UITextViewDelegate>
 
 @property (strong, nonatomic) id detailItem;
 
@@ -19,9 +19,13 @@
 
 @property (strong, nonatomic) UITextView *textView;
 
-@property (strong, nonatomic) NSString *nextURL;
-@property (strong, nonatomic) NSString *prevURL;
+@property (strong, nonatomic) NSString *nextURL, *prevURL, *curURL;
 
 @property (strong, nonatomic) MBProgressHUD *progressHUD;
+
+@property (strong, nonatomic) UITapGestureRecognizer *singleTap;
+@property (strong, nonatomic) UIToolbar *toolbar;
+@property (strong, nonatomic) UILabel *chapterInfo;
+@property (strong, nonatomic) UIButton *chapterInfoBtn;
 
 @end
