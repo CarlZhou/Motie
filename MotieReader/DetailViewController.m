@@ -10,6 +10,7 @@
 
 #import "TFHpple.h"
 #import "Tutorial.h"
+#import "OfflineChapterCoreData.h"
 
 #define BASE_URL @"http://m.motie.com"
 
@@ -20,6 +21,7 @@
 @implementation DetailViewController
 {
     NSMutableString *alertConformURL, *alertCancelURL;
+    UIBarButtonItem *saveBtn;
 }
 
 #pragma mark - Managing the detail item
@@ -58,6 +60,9 @@
 	// Do any additional setup after loading the view, typically from a nib.
 
     self.singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTap:)];
+    saveBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(saveContent)];
+    [saveBtn setEnabled:NO];
+    self.navigationItem.rightBarButtonItem = saveBtn;
 
     if (self.detailItem) {
 
@@ -79,12 +84,6 @@
 //    UIBarButtonItem *downloadBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(downloadContent)];
 //    [self.toolbar setItems:[NSArray arrayWithObjects:flexibleSpace,downloadBtn, nil]];
     [self.view addSubview:self.toolbar];
-}
-
-- (void)downloadContent
-{
-
-
 }
 
 - (void)viewDidUnload
@@ -113,13 +112,14 @@
 #pragma mark web
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
+    [saveBtn setEnabled:NO];
     if ([[[request mainDocumentURL] path] hasPrefix:@"/ajax/"])
     {
-        [self loadBook:[request mainDocumentURL]];
-        [self loadInfo:[request mainDocumentURL]];
-        self.curURL = [[request mainDocumentURL] absoluteString];
-        [self.view bringSubviewToFront:self.toolbar];
-        [self.chapterInfo setHidden:NO];
+        self.curURL = [NSString stringWithFormat:@"%@%@", BASE_URL,[[request mainDocumentURL] path]];
+        [self fetchContentFromParse];
+//        [self loadBook:[request mainDocumentURL]];
+//        [self.view bringSubviewToFront:self.toolbar];
+//        [self.chapterInfo setHidden:NO];
         return NO;
     }
     else if ([[[request mainDocumentURL] path] hasPrefix:@"/m/buy/"])
@@ -217,9 +217,6 @@
         [self.chapterInfo setFont:[UIFont fontWithName:@"HelveticaNeue" size:14]];
         [self.chapterInfo setTextColor:[UIColor whiteColor]];
         [self.chapterInfo setBackgroundColor:[UIColor blackColor]];
-//        self.chapterInfoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//        self.chapterInfoBtn.backgroundColor = [UIColor blackColor];
-//        [self.chapterInfoBtn setFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
         [self.textView addGestureRecognizer:self.singleTap];
         self.textView.delegate = self;
     }
@@ -228,19 +225,18 @@
     [self.textView setFont:[UIFont fontWithName:@"HelveticaNeue" size:18]];
     self.textView.editable = NO;
     [self.view addSubview:self.textView];
-//    [self.view addSubview:self.chapterInfoBtn];
     if (!self.isFullScreen)
         [self.view addSubview:self.chapterInfo];
     [self.detailedWebView setHidden:YES];
-    // 8
     [self.objects addObject:chapterContent];
+    self.curChapterContent = chapterContent;
 
     // load alert
     tutorialsXpathQueryString = @"//div[@id='bd']/div";
-    tutorialsNodes = [tutorialsParser searchWithXPathQuery:tutorialsXpathQueryString];
+    NSArray *alertNodes = [tutorialsParser searchWithXPathQuery:tutorialsXpathQueryString];
 
     NSMutableString *alertMessage = [NSMutableString string];
-    for (TFHppleElement *element in tutorialsNodes)
+    for (TFHppleElement *element in alertNodes)
     {
         if ([[[element firstChild] content] hasPrefix:@"收藏"])
             alertMessage = [[[element firstChild] content] mutableCopy];
@@ -249,11 +245,11 @@
     }
 
     tutorialsXpathQueryString = @"//div[@id='bd']/div[@class='alert']/a";
-    tutorialsNodes = [tutorialsParser searchWithXPathQuery:tutorialsXpathQueryString];
+    alertNodes = [tutorialsParser searchWithXPathQuery:tutorialsXpathQueryString];
 
     alertConformURL = [NSMutableString string];
     alertCancelURL = [NSMutableString string];
-    for (TFHppleElement *element in tutorialsNodes)
+    for (TFHppleElement *element in alertNodes)
     {
         if ([[[element firstChild] content] isEqualToString:@"确定"])
             alertConformURL = [[element attributes] valueForKey:@"href"];
@@ -262,9 +258,41 @@
     }
 
     if ([alertMessage isEqualToString:@""] && [alertConformURL isEqualToString:@""])
-        return;
+        NSLog(@"No Alert");
     else
         [self loadAlert:@"chapter alert" message:alertMessage];
+
+    // Load Chapter Info
+    tutorialsXpathQueryString = @"//div[@id='bd']/a";
+    NSArray *infoNodes = [tutorialsParser searchWithXPathQuery:tutorialsXpathQueryString];
+
+    self.nextURL = nil;
+    self.prevURL = nil;
+
+    for (TFHppleElement *element in infoNodes)
+    {
+        if ([[[element firstChild] content] isEqualToString:@"下一章"])
+        {
+            self.nextURL = [[element attributes] valueForKey:@"href"];
+        }
+        else if ([[[element firstChild] content] isEqualToString:@"上一章"])
+        {
+            self.prevURL = [[element attributes] valueForKey:@"href"];
+        }
+    }
+
+    [self setBackForward];
+
+    tutorialsXpathQueryString = @"//div[@id='bd']/h3";
+    infoNodes = [tutorialsParser searchWithXPathQuery:tutorialsXpathQueryString];
+
+    for (TFHppleElement *element in infoNodes)
+    {
+        self.chapterInfo.text = [[element firstChild] content];
+    }
+
+
+    [saveBtn setEnabled:YES];
 }
 
 - (void)loadAlert:(NSString *)title message:(NSString *)message
@@ -308,54 +336,10 @@
     }
 }
 
-- (void)loadInfo:(NSURL *)URL
-{
-    // 1
-    NSURL *tutorialsUrl = URL;
-    NSData *tutorialsHtmlData = [NSData dataWithContentsOfURL:tutorialsUrl];
-
-    // 2
-    TFHpple *tutorialsParser = [TFHpple hppleWithHTMLData:tutorialsHtmlData];
-
-    // 3
-    NSString *tutorialsXpathQueryString = @"//div[@id='bd']/a";
-    NSArray *tutorialsNodes = [tutorialsParser searchWithXPathQuery:tutorialsXpathQueryString];
-
-    self.nextURL = nil;
-    self.prevURL = nil;
-
-    for (TFHppleElement *element in tutorialsNodes)
-    {
-        //        NSLog(@"A:%@", [[element attributes] valueForKey:@"href"]);
-        //        NSLog(@"C:%@", [[element firstChild] content]);
-        if ([[[element firstChild] content] isEqualToString:@"下一章"])
-        {
-            self.nextURL = [[element attributes] valueForKey:@"href"];
-        }
-        else if ([[[element firstChild] content] isEqualToString:@"上一章"])
-        {
-            self.prevURL = [[element attributes] valueForKey:@"href"];
-        }
-    }
-
-    [self setBackForward];
-
-    tutorialsXpathQueryString = @"//div[@id='bd']/h3";
-    tutorialsNodes = [tutorialsParser searchWithXPathQuery:tutorialsXpathQueryString];
-
-    for (TFHppleElement *element in tutorialsNodes)
-    {
-        self.chapterInfo.text = [[element firstChild] content];
-    }
-
-
-}
-
 - (void)setBackForward
 {
     UIBarButtonItem *nextBtn = nil;
     UIBarButtonItem *prevBtn = nil;
-    self.navigationItem.rightBarButtonItems = nil;
     if (self.nextURL)
     {
         nextBtn = [[UIBarButtonItem alloc] initWithTitle:@"next" style:UIBarButtonItemStyleBordered target:self action:@selector(loadNextChapter)];
@@ -458,5 +442,157 @@
 }
 
 #pragma mark UITextView delegate
+
+#pragma mark Offline Reading
+
+- (void)saveContent
+{
+//    if (!self.isChapterAvaliableOffline)
+//    {
+//        PFObject *offlineChapter = [PFObject objectWithClassName:@"OfflineChapter"];
+//        [offlineChapter setObject:self.curURL forKey:@"currentURL"];
+//        [offlineChapter setObject:self.prevURL forKey:@"previousURL"];
+//        [offlineChapter setObject:self.nextURL forKey:@"nextURL"];
+//        [offlineChapter setObject:self.curChapterContent forKey:@"chapterContent"];
+//        [offlineChapter setObject:self.chapterInfo.text forKey:@"chapterInfo"];
+//        [offlineChapter saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//          if (!error) {
+//            // The gameScore saved successfully.
+//              NSLog(@"chapter:%@, successfully uploaded", self.chapterInfo.text);
+//              self.isChapterAvaliableOffline = YES;
+//              [saveBtn setEnabled:NO];
+//          } else {
+//            // There was an error saving the gameScore.
+//              NSLog(@"chapter:%@, uploaded failed", self.chapterInfo.text);
+//          }
+//        }];
+//    }
+
+    if (!self.isChapterAvaliableOffline)
+    {
+        id delegate = [[UIApplication sharedApplication] delegate];
+        self.managedObjectContext = [delegate managedObjectContext];
+        NSManagedObjectContext *context = [self managedObjectContext];
+        OfflineChapterCoreData *offlineChapter = [NSEntityDescription
+                                           insertNewObjectForEntityForName:@"OfflineChapterCoreData"
+                                           inManagedObjectContext:context];
+        offlineChapter.currentURL = self.curURL;
+        offlineChapter.previousURL = self.prevURL;
+        offlineChapter.nextURL = self.nextURL;
+        offlineChapter.chapterContent = self.curChapterContent;
+        offlineChapter.chapterInfo = self.chapterInfo.text;
+        NSError *error;
+        if (![context save:&error]) {
+            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+        }
+        else
+        {
+            self.isChapterAvaliableOffline = YES;
+            [saveBtn setEnabled:NO];
+        }
+    }
+}
+
+- (void)fetchContentFromParse
+{
+//    PFQuery *query = [PFQuery queryWithClassName:@"OfflineChapter"];
+//    [query whereKey:@"currentURL" equalTo:self.curURL];
+//    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//      if (!error) {
+//        // The find succeeded.
+//        NSLog(@"Successfully retrieved %d offline chapters", objects.count);
+//        NSLog(@"Objects:%@",objects);
+//          if (objects.count != 0)
+//            [self setOfflineReading:[objects objectAtIndex:0]];
+//          else
+//          {
+//              self.isChapterFetchedFromServer = NO;
+//              [self loadBook:[NSURL URLWithString:self.curURL]];
+//              [self.view bringSubviewToFront:self.toolbar];
+//              [self.chapterInfo setHidden:NO];
+//          }
+//      } else {
+//        // Log details of the failure
+//        NSLog(@"Error: %@ %@", error, [error userInfo]);
+//
+//      }
+//    }];
+
+    id delegate = [[UIApplication sharedApplication] delegate];
+    self.managedObjectContext = [delegate managedObjectContext];
+    NSManagedObjectContext *content = [self managedObjectContext];
+    NSEntityDescription *entityDescription = [NSEntityDescription
+                                              entityForName:@"OfflineChapterCoreData" inManagedObjectContext:content];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entityDescription];
+
+    // Set example predicate and sort orderings...
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"currentURL ==[c] %@", self.curURL];
+    [request setPredicate:predicate];
+
+    NSError *error;
+    NSArray *array = [content executeFetchRequest:request error:&error];
+    if (array == nil)
+    {
+        // Deal with error...
+        NSLog(@"Nothing");
+    }
+    else
+    {
+        NSLog(@"%@",array);
+        if (array.count != 0)
+        {
+            OfflineChapterCoreData *offlineChapter = [array objectAtIndex:0];
+            [self setOfflineReading:offlineChapter];
+        }
+        else
+        {
+            self.isChapterFetchedFromServer = NO;
+            [self loadBook:[NSURL URLWithString:self.curURL]];
+            [self.view bringSubviewToFront:self.toolbar];
+            [self.chapterInfo setHidden:NO];
+        }
+    }
+
+}
+
+- (void)setOfflineReading:(OfflineChapterCoreData *)offlineChapter
+{
+    // set chapterInfo
+    self.chapterInfo = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 34)];
+    self.chapterInfo.textAlignment = NSTextAlignmentCenter;
+    [self.chapterInfo setFont:[UIFont fontWithName:@"HelveticaNeue" size:14]];
+    [self.chapterInfo setTextColor:[UIColor whiteColor]];
+    [self.chapterInfo setBackgroundColor:[UIColor blackColor]];
+
+    self.curChapterContent = offlineChapter.chapterContent;
+    self.chapterInfo.text = offlineChapter.chapterInfo;
+    self.curURL = offlineChapter.currentURL;
+    self.prevURL = offlineChapter.previousURL;
+    self.nextURL = offlineChapter.nextURL;
+
+
+    if (self.textView)
+    {
+        [self.textView setHidden:NO];
+    }
+    else
+    {
+        self.textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 34, self.view.frame.size.width, self.detailedWebView.frame.size.height-34)];
+        [self.textView addGestureRecognizer:self.singleTap];
+        self.textView.delegate = self;
+    }
+    self.textView.text = self.curChapterContent;
+    [self.textView setContentOffset:CGPointMake(0, 0) animated:YES];
+    [self.textView setFont:[UIFont fontWithName:@"HelveticaNeue" size:18]];
+    self.textView.editable = NO;
+    [self.view addSubview:self.textView];
+    if (!self.isFullScreen)
+        [self.view addSubview:self.chapterInfo];
+    [self.detailedWebView setHidden:YES];
+    self.isChapterFetchedFromServer = YES;
+    [self setBackForward];
+    [self.view bringSubviewToFront:self.toolbar];
+}
 
 @end
