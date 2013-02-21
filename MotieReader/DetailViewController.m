@@ -18,6 +18,9 @@
 @end
 
 @implementation DetailViewController
+{
+    NSMutableString *alertConformURL, *alertCancelURL;
+}
 
 #pragma mark - Managing the detail item
 
@@ -226,10 +229,83 @@
     self.textView.editable = NO;
     [self.view addSubview:self.textView];
 //    [self.view addSubview:self.chapterInfoBtn];
-    [self.view addSubview:self.chapterInfo];
+    if (!self.isFullScreen)
+        [self.view addSubview:self.chapterInfo];
     [self.detailedWebView setHidden:YES];
     // 8
     [self.objects addObject:chapterContent];
+
+    // load alert
+    tutorialsXpathQueryString = @"//div[@id='bd']/div";
+    tutorialsNodes = [tutorialsParser searchWithXPathQuery:tutorialsXpathQueryString];
+
+    NSMutableString *alertMessage = [NSMutableString string];
+    for (TFHppleElement *element in tutorialsNodes)
+    {
+        if ([[[element firstChild] content] hasPrefix:@"收藏"])
+            alertMessage = [[[element firstChild] content] mutableCopy];
+        else if ([[[element firstChild] content] hasPrefix:@"您上次"])
+            alertMessage = [[[element firstChild] content] mutableCopy];
+    }
+
+    tutorialsXpathQueryString = @"//div[@id='bd']/div[@class='alert']/a";
+    tutorialsNodes = [tutorialsParser searchWithXPathQuery:tutorialsXpathQueryString];
+
+    alertConformURL = [NSMutableString string];
+    alertCancelURL = [NSMutableString string];
+    for (TFHppleElement *element in tutorialsNodes)
+    {
+        if ([[[element firstChild] content] isEqualToString:@"确定"])
+            alertConformURL = [[element attributes] valueForKey:@"href"];
+        else if ([[[element firstChild] content] isEqualToString:@"取消"])
+            alertCancelURL = [[element attributes] valueForKey:@"href"];
+    }
+
+    if ([alertMessage isEqualToString:@""] && [alertConformURL isEqualToString:@""])
+        return;
+    else
+        [self loadAlert:@"chapter alert" message:alertMessage];
+}
+
+- (void)loadAlert:(NSString *)title message:(NSString *)message
+{
+    UIAlertView *alert;
+    if ([message hasPrefix:@"收藏"])
+    {
+        alert = [[UIAlertView alloc] initWithTitle:message
+                              message:nil
+                              delegate:self
+                              cancelButtonTitle:@"取消"
+                              otherButtonTitles:@"确定", nil];
+    }
+    else
+    {
+        alert = [[UIAlertView alloc] initWithTitle:[message substringFromIndex:message.length-12]
+                                      message:[message substringToIndex:[message length]-13]
+                                      delegate:self
+                                      cancelButtonTitle:@"取消"
+                                      otherButtonTitles:@"确定", nil];
+    }
+
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+    {
+      //cancel clicked
+
+    }
+    else if (buttonIndex == 1)
+    {
+      // conform clicked
+      // load conform URL
+        if ([alertConformURL hasPrefix:@"http"])
+            [self.detailedWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:alertConformURL]]];
+        else
+            [self.detailedWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASE_URL, alertConformURL]]]];
+    }
 }
 
 - (void)loadInfo:(NSURL *)URL
@@ -316,12 +392,18 @@
 {
     if (self.nextURL)
         [self loadNewChapter:self.nextURL];
+    else
+        [[[[iToast makeText:NSLocalizedString(@"This is already the last chapter.", @"")]
+                    setGravity:iToastGravityCenter] setDuration:1000] show];
 }
 
 - (void)loadPrevChapter
 {
     if (self.prevURL)
         [self loadNewChapter:self.prevURL];
+    else
+        [[[[iToast makeText:NSLocalizedString(@"This is already the first chapter.", @"")]
+                            setGravity:iToastGravityCenter] setDuration:1000] show];
 }
 
 - (void)loadNewChapter:(NSString *)URL
@@ -361,6 +443,7 @@
         [self.chapterInfo removeFromSuperview];
         [self.textView setFrame:CGRectMake(self.textView.frame.origin.x, 0, self.textView.frame.size.width, self.textView.frame.size.height+142)];
         [self.detailedWebView setFrame:CGRectMake(0, 0, self.detailedWebView.frame.size.width, self.detailedWebView.frame.size.height+108)];
+        self.isFullScreen = YES;
     }
     else
     {
@@ -370,6 +453,7 @@
         [self.textView setFrame:CGRectMake(self.textView.frame.origin.x, 34, self.textView.frame.size.width, self.textView.frame.size.height-142)];
         [self.detailedWebView setFrame:CGRectMake(0, 0, self.detailedWebView.frame.size.width, self.detailedWebView.frame.size.height-108)];
         [self.navigationController setNavigationBarHidden:NO animated:NO];
+        self.isFullScreen = NO;
     }
 }
 

@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
+#import "iToast.h"
 
-@interface DetailViewController : UIViewController <UISplitViewControllerDelegate, UIWebViewDelegate, UIGestureRecognizerDelegate, UITextViewDelegate>
+@interface DetailViewController : UIViewController <UISplitViewControllerDelegate, UIWebViewDelegate, UIGestureRecognizerDelegate, UITextViewDelegate, UIAlertViewDelegate>
 
 @property (strong, nonatomic) id detailItem;
 
@@ -27,5 +28,8 @@
 @property (strong, nonatomic) UIToolbar *toolbar;
 @property (strong, nonatomic) UILabel *chapterInfo;
 @property (strong, nonatomic) UIButton *chapterInfoBtn;
+
+
+@property BOOL isFullScreen;
 
 @end

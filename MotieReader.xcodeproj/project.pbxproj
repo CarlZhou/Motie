@@ -29,6 +29,8 @@
 		C395811F16D411B2009EE15E /* Contributor.m in Sources */ = {isa = PBXBuildFile; fileRef = C395811C16D411B2009EE15E /* Contributor.m */; };
 		C395812016D411B2009EE15E /* Tutorial.m in Sources */ = {isa = PBXBuildFile; fileRef = C395811E16D411B2009EE15E /* Tutorial.m */; };
 		C395812516D41690009EE15E /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = C395812416D41690009EE15E /* MBProgressHUD.m */; };
+		C395813016D5C269009EE15E /* iToast.m in Sources */ = {isa = PBXBuildFile; fileRef = C395812F16D5C269009EE15E /* iToast.m */; };
+		C395813416D5C539009EE15E /* UIUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = C395813316D5C539009EE15E /* UIUtil.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +68,10 @@
 		C395811E16D411B2009EE15E /* Tutorial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tutorial.m; sourceTree = "<group>"; };
 		C395812316D41690009EE15E /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		C395812416D41690009EE15E /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		C395812E16D5C269009EE15E /* iToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iToast.h; sourceTree = "<group>"; };
+		C395812F16D5C269009EE15E /* iToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iToast.m; sourceTree = "<group>"; };
+		C395813216D5C539009EE15E /* UIUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIUtil.h; path = MotieReader/UIUtil.h; sourceTree = "<group>"; };
+		C395813316D5C539009EE15E /* UIUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIUtil.m; path = MotieReader/UIUtil.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +181,8 @@
 		C395812116D41674009EE15E /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				C395813116D5C4FB009EE15E /* MotieReaderUtil */,
+				C395812D16D5C25E009EE15E /* iToast */,
 				C395812216D4167D009EE15E /* MBProgressHUD */,
 			);
 			name = Util;
@@ -194,6 +202,24 @@
 			children = (
 			);
 			name = CoreData;
+			sourceTree = "<group>";
+		};
+		C395812D16D5C25E009EE15E /* iToast */ = {
+			isa = PBXGroup;
+			children = (
+				C395812E16D5C269009EE15E /* iToast.h */,
+				C395812F16D5C269009EE15E /* iToast.m */,
+			);
+			name = iToast;
+			sourceTree = "<group>";
+		};
+		C395813116D5C4FB009EE15E /* MotieReaderUtil */ = {
+			isa = PBXGroup;
+			children = (
+				C395813216D5C539009EE15E /* UIUtil.h */,
+				C395813316D5C539009EE15E /* UIUtil.m */,
+			);
+			name = MotieReaderUtil;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,6 +300,8 @@
 				C395811F16D411B2009EE15E /* Contributor.m in Sources */,
 				C395812016D411B2009EE15E /* Tutorial.m in Sources */,
 				C395812516D41690009EE15E /* MBProgressHUD.m in Sources */,
+				C395813016D5C269009EE15E /* iToast.m in Sources */,
+				C395813416D5C539009EE15E /* UIUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +347,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -335,6 +364,7 @@
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -352,6 +382,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -361,6 +392,7 @@
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
