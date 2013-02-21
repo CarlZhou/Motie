@@ -33,6 +33,9 @@
 
     MainViewController *mainView = [[MainViewController alloc] init];
     [self.window setRootViewController:mainView];
+    
+    [self.window makeKeyAndVisible];
+    //[self.window addSubview:mainView.view];
 //    }
 
 //    // Override point for customization after application launch.
