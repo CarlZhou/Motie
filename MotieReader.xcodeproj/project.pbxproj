@@ -23,6 +23,15 @@
 		8E7564CF16D67DEA00D4EE0D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E7564CE16D67DEA00D4EE0D /* SystemConfiguration.framework */; };
 		8E7564D616D6965900D4EE0D /* OfflineChapterCoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7564D516D6965900D4EE0D /* OfflineChapterCoreData.m */; };
 		8E7564E316D6AFB100D4EE0D /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7564E216D6AFB100D4EE0D /* MainViewController.m */; };
+		8E7564F916D6C9B000D4EE0D /* MotieLogo_Iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E7564F816D6C9B000D4EE0D /* MotieLogo_Iphone.png */; };
+		8E7564FC16D6C9D400D4EE0D /* MotieLogo_Iphone_Retina.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E7564FB16D6C9D400D4EE0D /* MotieLogo_Iphone_Retina.png */; };
+		8E7564FE16D6C9DE00D4EE0D /* MotieLogo_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E7564FD16D6C9DE00D4EE0D /* MotieLogo_iPad.png */; };
+		8E75650016D6C9E500D4EE0D /* MotieLogo_iPad_Retina.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E7564FF16D6C9E500D4EE0D /* MotieLogo_iPad_Retina.png */; };
+		8E75650216D6CC6E00D4EE0D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E75650116D6CC6E00D4EE0D /* Default.png */; };
+		8E75650C16D6CF5600D4EE0D /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E75650B16D6CF5600D4EE0D /* Default@2x.png */; };
+		8E75650E16D6CF9900D4EE0D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E75650D16D6CF9900D4EE0D /* Default-568h@2x.png */; };
+		8E75651016D6CFFC00D4EE0D /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E75650F16D6CFFC00D4EE0D /* Default-Portrait~ipad.png */; };
+		8E75651216D6D01F00D4EE0D /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E75651116D6D01F00D4EE0D /* Default-Portrait@2x~ipad.png */; };
 		C39580E116D4100C009EE15E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C39580E016D4100C009EE15E /* UIKit.framework */; };
 		C39580E316D4100C009EE15E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C39580E216D4100C009EE15E /* Foundation.framework */; };
 		C39580E516D4100C009EE15E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C39580E416D4100C009EE15E /* CoreGraphics.framework */; };
@@ -66,6 +75,15 @@
 		8E7564D516D6965900D4EE0D /* OfflineChapterCoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfflineChapterCoreData.m; sourceTree = "<group>"; };
 		8E7564E116D6AFB100D4EE0D /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		8E7564E216D6AFB100D4EE0D /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		8E7564F816D6C9B000D4EE0D /* MotieLogo_Iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MotieLogo_Iphone.png; path = ../MotieLogo_Iphone.png; sourceTree = "<group>"; };
+		8E7564FB16D6C9D400D4EE0D /* MotieLogo_Iphone_Retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MotieLogo_Iphone_Retina.png; path = ../MotieLogo_Iphone_Retina.png; sourceTree = "<group>"; };
+		8E7564FD16D6C9DE00D4EE0D /* MotieLogo_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MotieLogo_iPad.png; path = ../MotieLogo_iPad.png; sourceTree = "<group>"; };
+		8E7564FF16D6C9E500D4EE0D /* MotieLogo_iPad_Retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MotieLogo_iPad_Retina.png; path = ../MotieLogo_iPad_Retina.png; sourceTree = "<group>"; };
+		8E75650116D6CC6E00D4EE0D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
+		8E75650B16D6CF5600D4EE0D /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../Default@2x.png"; sourceTree = "<group>"; };
+		8E75650D16D6CF9900D4EE0D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
+		8E75650F16D6CFFC00D4EE0D /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait~ipad.png"; path = "../Default-Portrait~ipad.png"; sourceTree = "<group>"; };
+		8E75651116D6D01F00D4EE0D /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait@2x~ipad.png"; path = "../Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
 		C39580DD16D4100C009EE15E /* MotieReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MotieReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C39580E016D4100C009EE15E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C39580E216D4100C009EE15E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -134,6 +152,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8E7564ED16D6C98C00D4EE0D /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				8E75650316D6CC7600D4EE0D /* LauchImage */,
+				8E7564FA16D6C9BD00D4EE0D /* Icon */,
+			);
+			path = Image;
+			sourceTree = "<group>";
+		};
+		8E7564FA16D6C9BD00D4EE0D /* Icon */ = {
+			isa = PBXGroup;
+			children = (
+				8E7564FF16D6C9E500D4EE0D /* MotieLogo_iPad_Retina.png */,
+				8E7564FD16D6C9DE00D4EE0D /* MotieLogo_iPad.png */,
+				8E7564FB16D6C9D400D4EE0D /* MotieLogo_Iphone_Retina.png */,
+				8E7564F816D6C9B000D4EE0D /* MotieLogo_Iphone.png */,
+			);
+			name = Icon;
+			sourceTree = "<group>";
+		};
+		8E75650316D6CC7600D4EE0D /* LauchImage */ = {
+			isa = PBXGroup;
+			children = (
+				8E75651116D6D01F00D4EE0D /* Default-Portrait@2x~ipad.png */,
+				8E75650F16D6CFFC00D4EE0D /* Default-Portrait~ipad.png */,
+				8E75650D16D6CF9900D4EE0D /* Default-568h@2x.png */,
+				8E75650B16D6CF5600D4EE0D /* Default@2x.png */,
+				8E75650116D6CC6E00D4EE0D /* Default.png */,
+			);
+			name = LauchImage;
+			sourceTree = "<group>";
+		};
 		C39580D416D4100C009EE15E = {
 			isa = PBXGroup;
 			children = (
@@ -141,6 +191,7 @@
 				C39580E816D4100C009EE15E /* MotieReader */,
 				C39580DF16D4100C009EE15E /* Frameworks */,
 				C39580DE16D4100C009EE15E /* Products */,
+				8E7564ED16D6C98C00D4EE0D /* Image */,
 			);
 			sourceTree = "<group>";
 		};
@@ -337,6 +388,15 @@
 				C39580F516D4100C009EE15E /* Default.png in Resources */,
 				C39580F716D4100C009EE15E /* Default@2x.png in Resources */,
 				C39580F916D4100C009EE15E /* Default-568h@2x.png in Resources */,
+				8E7564F916D6C9B000D4EE0D /* MotieLogo_Iphone.png in Resources */,
+				8E7564FC16D6C9D400D4EE0D /* MotieLogo_Iphone_Retina.png in Resources */,
+				8E7564FE16D6C9DE00D4EE0D /* MotieLogo_iPad.png in Resources */,
+				8E75650016D6C9E500D4EE0D /* MotieLogo_iPad_Retina.png in Resources */,
+				8E75650216D6CC6E00D4EE0D /* Default.png in Resources */,
+				8E75650C16D6CF5600D4EE0D /* Default@2x.png in Resources */,
+				8E75650E16D6CF9900D4EE0D /* Default-568h@2x.png in Resources */,
+				8E75651016D6CFFC00D4EE0D /* Default-Portrait~ipad.png in Resources */,
+				8E75651216D6D01F00D4EE0D /* Default-Portrait@2x~ipad.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

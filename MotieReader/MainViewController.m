@@ -37,6 +37,10 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
 
+    UIImage *bgImage = [[UIImage imageNamed:@"Default-Portrait@2x~ipad.png"] stretchableImageWithLeftCapWidth:768 topCapHeight:1004];
+    self.backgroundImageView = [[UIImageView alloc] initWithImage:bgImage];
+    [self.backgroundImageView setFrame:self.view.frame];
+    [self.view addSubview:self.backgroundImageView];
     [self loadMainPage:MAIN_PAGE];
 }
 
@@ -61,6 +65,7 @@
     libraryViewController.managedObjectContext = [delegate managedObjectContext];
     libraryViewController.LibraryURL = self.URL;
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:libraryViewController];
+    [navigationController.navigationBar setTintColor:[UIColor lightGrayColor]];
     [self presentModalViewController:navigationController animated:YES];
 }
 
@@ -84,14 +89,15 @@
     NSArray *urlInfoNodes = [URLParser searchWithXPathQuery:URLXpathQueryString];
 
     // 4
-    NSMutableString *chapterContent = [NSMutableString string];
     for (TFHppleElement *element in urlInfoNodes) {
 
     }
     if (urlInfoNodes.count != 0)
     {
-        self.mainWebView = [[UIWebView alloc] initWithFrame:self.view.frame];
+        [self.backgroundImageView removeFromSuperview];
+        self.mainWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
         self.mainWebView.delegate = self;
+        self.mainWebView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self.mainWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:LOGIN_PAGE]]];
         [self.view addSubview:self.mainWebView];
         return;

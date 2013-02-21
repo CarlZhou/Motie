@@ -83,6 +83,7 @@
 {
     self.toolbar = [[UIToolbar alloc] init];
     self.toolbar.frame = CGRectMake(0, self.view.frame.size.height-88, self.view.frame.size.width, 44);
+    [self.toolbar setTintColor:[UIColor lightGrayColor]];
 //    UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
 //    UIBarButtonItem *downloadBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(downloadContent)];
 //    [self.toolbar setItems:[NSArray arrayWithObjects:flexibleSpace,downloadBtn, nil]];

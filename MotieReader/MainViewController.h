@@ -13,5 +13,6 @@
 @property (nonatomic, strong) UIWebView *mainWebView;
 
 @property (nonatomic, strong) NSString *URL;
+@property (nonatomic, strong) UIImageView *backgroundImageView;
 
 @end
