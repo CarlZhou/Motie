@@ -1,32 +1,32 @@
 //
-//  MasterViewController.m
+//  LibraryController.m
 //  MotieReader
 //
 //  Created by Carl on 2013-02-19.
 //  Copyright (c) 2013 Carl. All rights reserved.
 //
 
-#import "MasterViewController.h"
+#import "LibraryController.h"
 
-#import "DetailViewController.h"
+#import "ChapterViewController.h"
 
 #import "TFHpple.h"
 #import "Tutorial.h"
 #import "Contributor.h"
 
-@interface MasterViewController () {
+@interface LibraryController () {
     NSMutableArray *_objects;
     NSMutableArray *_contributors;
 }
 @end
 
-@implementation MasterViewController
+@implementation LibraryController
 
 @synthesize detailViewController = _detailViewController;
 
 - (void)loadTutorials {
     // 1
-    NSURL *tutorialsUrl = [NSURL URLWithString:@"http://m.motie.com/people/417833/reading"];
+    NSURL *tutorialsUrl = [NSURL URLWithString:self.LibraryURL];
     NSData *tutorialsHtmlData = [NSData dataWithContentsOfURL:tutorialsUrl];
 
     // 2
@@ -220,9 +220,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 //    if (!self.detailViewController) {
-//        self.detailViewController = [[DetailViewController alloc] init];
+//        self.detailViewController = [[ChapterViewController alloc] init];
 //    }
-    DetailViewController *detailViewController = [[DetailViewController alloc] init];
+    ChapterViewController *detailViewController = [[ChapterViewController alloc] init];
     NSDate *object = [_objects objectAtIndex:indexPath.row];
     detailViewController.detailItem = object;
     [self.navigationController pushViewController:detailViewController animated:YES];

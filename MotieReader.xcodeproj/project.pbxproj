@@ -22,6 +22,7 @@
 		8E7564CD16D67DE200D4EE0D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E7564CC16D67DE200D4EE0D /* StoreKit.framework */; };
 		8E7564CF16D67DEA00D4EE0D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E7564CE16D67DEA00D4EE0D /* SystemConfiguration.framework */; };
 		8E7564D616D6965900D4EE0D /* OfflineChapterCoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7564D516D6965900D4EE0D /* OfflineChapterCoreData.m */; };
+		8E7564E316D6AFB100D4EE0D /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7564E216D6AFB100D4EE0D /* MainViewController.m */; };
 		C39580E116D4100C009EE15E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C39580E016D4100C009EE15E /* UIKit.framework */; };
 		C39580E316D4100C009EE15E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C39580E216D4100C009EE15E /* Foundation.framework */; };
 		C39580E516D4100C009EE15E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C39580E416D4100C009EE15E /* CoreGraphics.framework */; };
@@ -32,11 +33,9 @@
 		C39580F516D4100C009EE15E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = C39580F416D4100C009EE15E /* Default.png */; };
 		C39580F716D4100C009EE15E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C39580F616D4100C009EE15E /* Default@2x.png */; };
 		C39580F916D4100C009EE15E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C39580F816D4100C009EE15E /* Default-568h@2x.png */; };
-		C39580FC16D4100C009EE15E /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C39580FA16D4100C009EE15E /* MainStoryboard_iPhone.storyboard */; };
-		C39580FF16D4100C009EE15E /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C39580FD16D4100C009EE15E /* MainStoryboard_iPad.storyboard */; };
 		C395810216D4100C009EE15E /* MotieReader.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C395810016D4100C009EE15E /* MotieReader.xcdatamodeld */; };
-		C395810516D4100C009EE15E /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C395810416D4100C009EE15E /* MasterViewController.m */; };
-		C395810816D4100C009EE15E /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C395810716D4100C009EE15E /* DetailViewController.m */; };
+		C395810516D4100C009EE15E /* LibraryController.m in Sources */ = {isa = PBXBuildFile; fileRef = C395810416D4100C009EE15E /* LibraryController.m */; };
+		C395810816D4100C009EE15E /* ChapterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C395810716D4100C009EE15E /* ChapterViewController.m */; };
 		C395811516D4110C009EE15E /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = C395811016D4110C009EE15E /* TFHpple.m */; };
 		C395811616D4110C009EE15E /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C395811216D4110C009EE15E /* TFHppleElement.m */; };
 		C395811716D4110C009EE15E /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C395811416D4110C009EE15E /* XPathQuery.m */; };
@@ -65,6 +64,8 @@
 		8E7564CE16D67DEA00D4EE0D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8E7564D416D6965900D4EE0D /* OfflineChapterCoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfflineChapterCoreData.h; sourceTree = "<group>"; };
 		8E7564D516D6965900D4EE0D /* OfflineChapterCoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfflineChapterCoreData.m; sourceTree = "<group>"; };
+		8E7564E116D6AFB100D4EE0D /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		8E7564E216D6AFB100D4EE0D /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		C39580DD16D4100C009EE15E /* MotieReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MotieReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C39580E016D4100C009EE15E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C39580E216D4100C009EE15E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -79,13 +80,11 @@
 		C39580F416D4100C009EE15E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		C39580F616D4100C009EE15E /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		C39580F816D4100C009EE15E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		C39580FB16D4100C009EE15E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		C39580FE16D4100C009EE15E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		C395810116D4100C009EE15E /* MotieReader.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MotieReader.xcdatamodel; sourceTree = "<group>"; };
-		C395810316D4100C009EE15E /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
-		C395810416D4100C009EE15E /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
-		C395810616D4100C009EE15E /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
-		C395810716D4100C009EE15E /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		C395810316D4100C009EE15E /* LibraryController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LibraryController.h; sourceTree = "<group>"; };
+		C395810416D4100C009EE15E /* LibraryController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LibraryController.m; sourceTree = "<group>"; };
+		C395810616D4100C009EE15E /* ChapterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChapterViewController.h; sourceTree = "<group>"; };
+		C395810716D4100C009EE15E /* ChapterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChapterViewController.m; sourceTree = "<group>"; };
 		C395810F16D4110C009EE15E /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
 		C395811016D4110C009EE15E /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
 		C395811116D4110C009EE15E /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHppleElement.h; sourceTree = "<group>"; };
@@ -187,12 +186,12 @@
 				C395810E16D410E9009EE15E /* hpple */,
 				C39580F116D4100C009EE15E /* AppDelegate.h */,
 				C39580F216D4100C009EE15E /* AppDelegate.m */,
-				C39580FA16D4100C009EE15E /* MainStoryboard_iPhone.storyboard */,
-				C39580FD16D4100C009EE15E /* MainStoryboard_iPad.storyboard */,
-				C395810316D4100C009EE15E /* MasterViewController.h */,
-				C395810416D4100C009EE15E /* MasterViewController.m */,
-				C395810616D4100C009EE15E /* DetailViewController.h */,
-				C395810716D4100C009EE15E /* DetailViewController.m */,
+				C395810316D4100C009EE15E /* LibraryController.h */,
+				C395810416D4100C009EE15E /* LibraryController.m */,
+				C395810616D4100C009EE15E /* ChapterViewController.h */,
+				C395810716D4100C009EE15E /* ChapterViewController.m */,
+				8E7564E116D6AFB100D4EE0D /* MainViewController.h */,
+				8E7564E216D6AFB100D4EE0D /* MainViewController.m */,
 				C395810016D4100C009EE15E /* MotieReader.xcdatamodeld */,
 				C39580E916D4100C009EE15E /* Supporting Files */,
 			);
@@ -338,8 +337,6 @@
 				C39580F516D4100C009EE15E /* Default.png in Resources */,
 				C39580F716D4100C009EE15E /* Default@2x.png in Resources */,
 				C39580F916D4100C009EE15E /* Default-568h@2x.png in Resources */,
-				C39580FC16D4100C009EE15E /* MainStoryboard_iPhone.storyboard in Resources */,
-				C39580FF16D4100C009EE15E /* MainStoryboard_iPad.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,8 +350,8 @@
 				C39580EF16D4100C009EE15E /* main.m in Sources */,
 				C39580F316D4100C009EE15E /* AppDelegate.m in Sources */,
 				C395810216D4100C009EE15E /* MotieReader.xcdatamodeld in Sources */,
-				C395810516D4100C009EE15E /* MasterViewController.m in Sources */,
-				C395810816D4100C009EE15E /* DetailViewController.m in Sources */,
+				C395810516D4100C009EE15E /* LibraryController.m in Sources */,
+				C395810816D4100C009EE15E /* ChapterViewController.m in Sources */,
 				C395811516D4110C009EE15E /* TFHpple.m in Sources */,
 				C395811616D4110C009EE15E /* TFHppleElement.m in Sources */,
 				C395811716D4110C009EE15E /* XPathQuery.m in Sources */,
@@ -364,6 +361,7 @@
 				C395813016D5C269009EE15E /* iToast.m in Sources */,
 				C395813416D5C539009EE15E /* UIUtil.m in Sources */,
 				8E7564D616D6965900D4EE0D /* OfflineChapterCoreData.m in Sources */,
+				8E7564E316D6AFB100D4EE0D /* MainViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -376,22 +374,6 @@
 				C39580EC16D4100C009EE15E /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		C39580FA16D4100C009EE15E /* MainStoryboard_iPhone.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C39580FB16D4100C009EE15E /* en */,
-			);
-			name = MainStoryboard_iPhone.storyboard;
-			sourceTree = "<group>";
-		};
-		C39580FD16D4100C009EE15E /* MainStoryboard_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C39580FE16D4100C009EE15E /* en */,
-			);
-			name = MainStoryboard_iPad.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

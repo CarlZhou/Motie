@@ -1,5 +1,5 @@
 //
-//  MasterViewController.h
+//  LibraryController.h
 //  MotieReader
 //
 //  Created by Carl on 2013-02-19.
@@ -9,15 +9,17 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 
-@class DetailViewController;
+@class ChapterViewController;
 
 #import <CoreData/CoreData.h>
 
-@interface MasterViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+@interface LibraryController : UITableViewController <NSFetchedResultsControllerDelegate>
 
-@property (strong, nonatomic) DetailViewController *detailViewController;
+@property (strong, nonatomic) ChapterViewController *detailViewController;
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) NSString *LibraryURL;
 
+- (void)loadTutorials;
 @end

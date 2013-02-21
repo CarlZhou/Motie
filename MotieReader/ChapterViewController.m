@@ -1,24 +1,25 @@
 //
-//  DetailViewController.m
+//  ChapterViewController.m
 //  MotieReader
 //
 //  Created by Carl on 2013-02-19.
 //  Copyright (c) 2013 Carl. All rights reserved.
 //
 
-#import "DetailViewController.h"
+#import "ChapterViewController.h"
 
 #import "TFHpple.h"
 #import "Tutorial.h"
 #import "OfflineChapterCoreData.h"
+#import "LibraryController.h"
 
 #define BASE_URL @"http://m.motie.com"
 
-@interface DetailViewController ()
+@interface ChapterViewController ()
 - (void)configureView;
 @end
 
-@implementation DetailViewController
+@implementation ChapterViewController
 {
     NSMutableString *alertConformURL, *alertCancelURL;
     UIBarButtonItem *saveBtn;
@@ -70,6 +71,8 @@
 
         self.detailedWebView.delegate = self;
 
+        self.detailedWebView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+
         [self addToolBar];
     }
 
@@ -113,13 +116,12 @@
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     [saveBtn setEnabled:NO];
+    // Not Sure!
+    [self.detailedWebView setHidden:NO];
     if ([[[request mainDocumentURL] path] hasPrefix:@"/ajax/"])
     {
         self.curURL = [NSString stringWithFormat:@"%@%@", BASE_URL,[[request mainDocumentURL] path]];
         [self fetchContentFromParse];
-//        [self loadBook:[request mainDocumentURL]];
-//        [self.view bringSubviewToFront:self.toolbar];
-//        [self.chapterInfo setHidden:NO];
         return NO;
     }
     else if ([[[request mainDocumentURL] path] hasPrefix:@"/m/buy/"])
@@ -136,6 +138,12 @@
         self.prevURL = self.curURL;
         self.nextURL = nil;
         [self setBackForward];
+        return YES;
+    }
+    else if ([[[request mainDocumentURL] query] hasPrefix:@"sd="])
+    {
+         // Not Sure!
+        [self.detailedWebView setHidden:YES];
         return YES;
     }
     else
@@ -158,6 +166,10 @@
 {
     if (self.progressHUD)
         [self hideProgressHUD];
+    if ([[[[webView request] mainDocumentURL] query] hasPrefix:@"sd="])
+    {
+        [self loadMainPage:[[[webView request] mainDocumentURL] absoluteString]];
+    }
 }
 
 - (void)showProgressHUD:(NSString *)message time:(NSUInteger)time
@@ -213,6 +225,8 @@
     {
         self.textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 34, self.view.frame.size.width, self.detailedWebView.frame.size.height-34)];
         self.chapterInfo = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 34)];
+        self.textView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        self.chapterInfo.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         self.chapterInfo.textAlignment = NSTextAlignmentCenter;
         [self.chapterInfo setFont:[UIFont fontWithName:@"HelveticaNeue" size:14]];
         [self.chapterInfo setTextColor:[UIColor whiteColor]];
@@ -560,6 +574,7 @@
 {
     // set chapterInfo
     self.chapterInfo = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 34)];
+    self.chapterInfo.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.chapterInfo.textAlignment = NSTextAlignmentCenter;
     [self.chapterInfo setFont:[UIFont fontWithName:@"HelveticaNeue" size:14]];
     [self.chapterInfo setTextColor:[UIColor whiteColor]];
@@ -579,6 +594,7 @@
     else
     {
         self.textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 34, self.view.frame.size.width, self.detailedWebView.frame.size.height-34)];
+        self.textView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self.textView addGestureRecognizer:self.singleTap];
         self.textView.delegate = self;
     }
@@ -593,6 +609,34 @@
     self.isChapterFetchedFromServer = YES;
     [self setBackForward];
     [self.view bringSubviewToFront:self.toolbar];
+}
+
+#pragma mark library view
+
+- (void)loadMainPage:(NSString *)URL
+{
+    // 1
+    NSURL *loadURL = [NSURL URLWithString:URL];
+    NSData *loadURLHtmlData = [NSData dataWithContentsOfURL:loadURL];
+
+    // 2
+    TFHpple *URLParser = [TFHpple hppleWithHTMLData:loadURLHtmlData];
+
+    NSString *URLXpathQueryString = @"//div[@class='nav']";
+    NSArray *urlInfoNodes = [URLParser searchWithXPathQuery:URLXpathQueryString];
+    for (TFHppleElement *element in urlInfoNodes)
+    {
+        for (TFHppleElement *subElement in [element children])
+        {
+            if ([[[subElement firstChild] content] isEqualToString:@"书架 "])
+            {
+                LibraryController *test = [self.navigationController.viewControllers objectAtIndex:0];
+                test.LibraryURL = [[subElement attributes] valueForKey:@"href"];
+                [test performSelector:@selector(loadTutorials)];
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        }
+    }
 }
 
 @end

@@ -1,5 +1,5 @@
 //
-//  DetailViewController.h
+//  ChapterViewController.h
 //  MotieReader
 //
 //  Created by Carl on 2013-02-19.
@@ -11,7 +11,7 @@
 #import "iToast.h"
 #import <Parse/Parse.h>
 
-@interface DetailViewController : UIViewController <UISplitViewControllerDelegate, UIWebViewDelegate, UIGestureRecognizerDelegate, UITextViewDelegate, UIAlertViewDelegate>
+@interface ChapterViewController : UIViewController <UISplitViewControllerDelegate, UIWebViewDelegate, UIGestureRecognizerDelegate, UITextViewDelegate, UIAlertViewDelegate>
 
 @property (strong, nonatomic) id detailItem;
 
