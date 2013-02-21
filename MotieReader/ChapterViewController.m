@@ -116,7 +116,6 @@
 #pragma mark web
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    [saveBtn setEnabled:NO];
     // Not Sure!
     [self.detailedWebView setHidden:NO];
     if ([[[request mainDocumentURL] path] hasPrefix:@"/ajax/"])
@@ -192,6 +191,46 @@
 
 #pragma mark parse book
 
+- (NSString *)loadNextPage:(NSString *)URL
+{
+    NSURL *tutorialsUrl = [NSURL URLWithString:URL];
+    NSData *tutorialsHtmlData = [NSData dataWithContentsOfURL:tutorialsUrl];
+
+    // 2
+    TFHpple *tutorialsParser = [TFHpple hppleWithHTMLData:tutorialsHtmlData];
+
+    // 3
+    NSString *tutorialsXpathQueryString = @"//div[@id='bd']/p";
+    NSArray *tutorialsNodes = [tutorialsParser searchWithXPathQuery:tutorialsXpathQueryString];
+
+    // 4
+    NSMutableString *chapterContent = [NSMutableString string];
+    for (TFHppleElement *element in tutorialsNodes) {
+
+        for (TFHppleElement *subelement in [element children])
+        {
+            if ([subelement content])
+            {
+                [chapterContent appendString:[[subelement content] substringToIndex:[[subelement content] length]-1]];
+                [chapterContent appendString:@"\n"];
+            }
+        }
+    }
+
+    tutorialsXpathQueryString = @"//div[@id='bd']/div[@class='page']/form/a";
+    tutorialsNodes = [tutorialsParser searchWithXPathQuery:tutorialsXpathQueryString];
+    for (TFHppleElement *element in tutorialsNodes)
+    {
+        if ([[[element firstChild] content] isEqualToString:@"下一页 "])
+        {
+            NSString *nextPageURL = [[element attributes] valueForKey:@"href"];
+            [chapterContent appendString: [self loadNextPage:nextPageURL]];
+        }
+    }
+
+    return chapterContent;
+}
+
 - (void)loadBook:(NSURL *)URL {
     // 1
     NSURL *tutorialsUrl = URL;
@@ -215,6 +254,18 @@
                 [chapterContent appendString:[[subelement content] substringToIndex:[[subelement content] length]-1]];
                 [chapterContent appendString:@"\n"];
             }
+        }
+    }
+
+    // if there is more than 1 page
+    tutorialsXpathQueryString = @"//div[@id='bd']/div[@class='page']/form/a";
+    tutorialsNodes = [tutorialsParser searchWithXPathQuery:tutorialsXpathQueryString];
+    for (TFHppleElement *element in tutorialsNodes)
+    {
+        if ([[[element firstChild] content] isEqualToString:@"下一页"])
+        {
+            NSString *nextPageURL = [[element attributes] valueForKey:@"href"];
+            [chapterContent appendString: [self loadNextPage:nextPageURL]];
         }
     }
 
@@ -245,6 +296,7 @@
     [self.detailedWebView setHidden:YES];
     [self.objects addObject:chapterContent];
     self.curChapterContent = chapterContent;
+    [saveBtn setEnabled:YES];
 
     // load alert
     tutorialsXpathQueryString = @"//div[@id='bd']/div";
@@ -307,7 +359,7 @@
     }
 
 
-    [saveBtn setEnabled:YES];
+
 }
 
 - (void)loadAlert:(NSString *)title message:(NSString *)message
@@ -503,7 +555,7 @@
         else
         {
             self.isChapterAvaliableOffline = YES;
-            [saveBtn setEnabled:NO];
+            [saveBtn setEnabled:YES];
         }
     }
 }
