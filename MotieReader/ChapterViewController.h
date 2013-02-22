@@ -34,7 +34,7 @@
 @property (strong, nonatomic) NSString *curChapterContent;
 
 
-@property BOOL isFullScreen, isChapterAvaliableOffline, isChapterFetchedFromServer, isLoadBookInfo;
+@property BOOL isFullScreen, isChapterAvaliableOffline, isChapterFetchedFromServer, isLoadBookInfo, isViewAppeared;
 
 @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
 

@@ -24,18 +24,24 @@
 
 - (void)configureView
 {
-    [self.detailedWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"about:blank"]]]];
-
-    if (self.isLoadBookInfo)
+    if (![[UIUtil sharedInstance] isNetWorkAvailable])
     {
-        [self.detailedWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASE_URL,self.curBook.bookURL]]]];
+        [self fetchContentFromParse];
     }
     else
     {
-        [self.detailedWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASE_URL,self.curBook.curReadingURL]]]];
+        [self.detailedWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"about:blank"]]]];
+        if (self.isLoadBookInfo)
+        {
+            [self.detailedWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASE_URL,self.curBook.bookURL]]]];
+        }
+        else
+        {
+            [self.detailedWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASE_URL,self.curBook.curReadingURL]]]];
+        }
+        [self.view addSubview:self.detailedWebView];
     }
 
-    [self.view addSubview:self.detailedWebView];
 
 }
 
@@ -53,7 +59,6 @@
     self.detailedWebView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
     [self addToolBar];
-    [self configureView];
 }
 
 - (void)addToolBar
@@ -72,6 +77,19 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    NSURL *OpeningURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASE_URL, self.curBook.curReadingURL]];
+    self.curURL = [NSString stringWithFormat:@"%@%@", @"http://m.motie.com/ajax/chapter/",[OpeningURL lastPathComponent]];
+    [self configureView];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    self.isViewAppeared = YES;
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    self.isViewAppeared = NO;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -331,8 +349,9 @@
         self.chapterInfo.text = [[element firstChild] content];
     }
 
-
-
+    if (self.isFullScreen)
+        [[[[iToast makeText:NSLocalizedString(self.chapterInfo.text, @"")]
+                        setGravity:iToastGravityBottom] setDuration:1000] show];
 }
 
 - (void)loadAlert:(NSString *)title message:(NSString *)message
@@ -415,7 +434,16 @@
 - (void)loadNextChapter
 {
     if (self.nextURL)
-        [self loadNewChapter:self.nextURL];
+    {
+        if ([[UIUtil sharedInstance] isNetWorkAvailable])
+            [self loadNewChapter:self.nextURL];
+        else
+        {
+            NSURL *nextURL = [NSURL URLWithString:self.nextURL];
+            self.curURL = [NSString stringWithFormat:@"%@%@", @"http://m.motie.com/ajax/chapter/",[nextURL lastPathComponent]];
+            [self fetchContentFromParse];
+        }
+    }
     else
         [[[[iToast makeText:NSLocalizedString(@"This is already the last chapter.", @"")]
                     setGravity:iToastGravityCenter] setDuration:1000] show];
@@ -424,7 +452,16 @@
 - (void)loadPrevChapter
 {
     if (self.prevURL)
-        [self loadNewChapter:self.prevURL];
+    {
+        if ([[UIUtil sharedInstance] isNetWorkAvailable])
+            [self loadNewChapter:self.prevURL];
+        else
+        {
+            NSURL *prevURL = [NSURL URLWithString:self.prevURL];
+            self.curURL = [NSString stringWithFormat:@"%@%@", @"http://m.motie.com/ajax/chapter/",[prevURL lastPathComponent]];
+            [self fetchContentFromParse];
+        }
+    }
     else
         [[[[iToast makeText:NSLocalizedString(@"This is already the first chapter.", @"")]
                             setGravity:iToastGravityCenter] setDuration:1000] show];
@@ -588,11 +625,18 @@
             if (![[UIUtil sharedInstance] isNetWorkAvailable])
             {
                 [[[[iToast makeText:NSLocalizedString(@"Network is not avavilable, and Chapter Content is not downloaded", @"")]
-                   setGravity:iToastGravityCenter] setDuration:1000] show];
+                        setGravity:iToastGravityCenter] setDuration:1000] show];
+                if (![self.view.subviews containsObject:self.textView])
+                {
+                    [self.view addSubview:self.detailedWebView];
+                    [self.detailedWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"about:blank"]]]];
+                    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(popViewIfNetworkIsNotAvailble) userInfo:nil repeats:NO];
+                }
                 return;
             }
 
             self.isChapterFetchedFromServer = NO;
+            self.isChapterAvaliableOffline = NO;
             [self loadBook:[NSURL URLWithString:self.curURL]];
             [self.view bringSubviewToFront:self.toolbar];
             [self.chapterInfo setHidden:NO];
@@ -600,6 +644,12 @@
         }
     }
 
+}
+
+- (void)popViewIfNetworkIsNotAvailble
+{
+    if (self.isViewAppeared)
+        [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)setOfflineReading:(OfflineChapterCoreData *)offlineChapter
@@ -636,11 +686,15 @@
     self.textView.editable = NO;
     [self.view addSubview:self.textView];
     if (!self.isFullScreen)
-        [self.view addSubview:self.chapterInfo];
+    [self.view addSubview:self.chapterInfo];
     [self.detailedWebView setHidden:YES];
     self.isChapterFetchedFromServer = YES;
     [self setBackForward];
     [self.view bringSubviewToFront:self.toolbar];
+    [self.textView setHidden:NO];
+    if (self.isFullScreen)
+        [[[[iToast makeText:NSLocalizedString(self.chapterInfo.text, @"")]
+                        setGravity:iToastGravityBottom] setDuration:1000] show];
 }
 
 #pragma mark library view
