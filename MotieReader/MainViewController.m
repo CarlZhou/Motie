@@ -10,6 +10,7 @@
 #import "TFHpple.h"
 #import "LibraryController.h"
 #import "MBProgressHUD.h"
+#import "UIUtil.h"
 
 #define MAIN_PAGE @"http://m.motie.com/"
 #define LOGIN_PAGE @"http://m.motie.com/accounts/login"
@@ -49,6 +50,10 @@
 {
     viewDidShown = YES;
     if (self.URL)
+    {
+        [self presentLibrary];
+    }
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"oldLibraryBooks"])
     {
         [self presentLibrary];
     }

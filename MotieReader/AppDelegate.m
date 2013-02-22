@@ -33,16 +33,18 @@
 //    {
 
 
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
     MainViewController *mainView = [[MainViewController alloc] init];
     [self.window setRootViewController:mainView];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
-    
+
     self.hostReach = [Reachability reachabilityWithHostName: @"m.motie.com"];
     [self.hostReach startNotifier];
-    
+
     [self.window makeKeyAndVisible];
-    
+
     //[self.window addSubview:mainView.view];
 //    }
 
@@ -94,6 +96,15 @@
 {
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
+
+    if([[UIDevice currentDevice] respondsToSelector:@selector(isMultitaskingSupported)] &&
+           ![[UIDevice currentDevice] isMultitaskingSupported]) {
+            NSUserDefaults *currentDefaults = [NSUserDefaults standardUserDefaults];
+
+            NSData *myEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:[[UIUtil sharedInstance] oldLibraryBooksData]];
+            [currentDefaults setObject:myEncodedObject forKey:@"oldLibraryBooks"];
+            [currentDefaults synchronize];
+        }
 }
 
 - (void)saveContext
@@ -200,7 +211,7 @@
 
 - (void) updateInterfaceWithReachability
 {
-    
+
 }
 
 @end
