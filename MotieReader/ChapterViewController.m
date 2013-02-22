@@ -20,7 +20,6 @@
 @implementation ChapterViewController
 {
     NSMutableString *alertConformURL, *alertCancelURL;
-    UIBarButtonItem *saveBtn;
 }
 
 - (void)configureView
@@ -46,9 +45,6 @@
 	// Do any additional setup after loading the view, typically from a nib.
 
     self.singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTap:)];
-    saveBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(saveContent)];
-    [saveBtn setEnabled:NO];
-    self.navigationItem.rightBarButtonItem = saveBtn;
 
     self.detailedWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-88)];
 
@@ -274,7 +270,6 @@
     [self.detailedWebView setHidden:YES];
     [self.objects addObject:chapterContent];
     self.curChapterContent = chapterContent;
-    [saveBtn setEnabled:YES];
 
     // load alert
     tutorialsXpathQueryString = @"//div[@id='bd']/div";
@@ -533,7 +528,6 @@
         else
         {
             self.isChapterAvaliableOffline = YES;
-            [saveBtn setEnabled:YES];
         }
     }
 }
@@ -597,11 +591,12 @@
                    setGravity:iToastGravityCenter] setDuration:1000] show];
                 return;
             }
-            
+
             self.isChapterFetchedFromServer = NO;
             [self loadBook:[NSURL URLWithString:self.curURL]];
             [self.view bringSubviewToFront:self.toolbar];
             [self.chapterInfo setHidden:NO];
+            [self saveContent];
         }
     }
 
