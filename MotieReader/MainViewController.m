@@ -23,6 +23,7 @@
 @implementation MainViewController
 {
     BOOL viewDidShown;
+    UIView *errorView;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -57,9 +58,9 @@
     {
         [self presentLibrary];
     }
-    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"notFirstEnterLibrary"] && ![[UIUtil sharedInstance] isNetWorkAvailable])
+    else if (![[UIUtil sharedInstance] isNetWorkAvailable])
     {
-
+        [self presentLibrary];
     }
 
 }

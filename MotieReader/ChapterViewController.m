@@ -618,6 +618,16 @@
         if (array.count != 0)
         {
             OfflineChapterCoreData *offlineChapter = [array objectAtIndex:0];
+            if (!offlineChapter.nextURL && [[UIUtil sharedInstance] isNetWorkAvailable])
+            {
+                self.isChapterFetchedFromServer = NO;
+                self.isChapterAvaliableOffline = NO;
+                [self loadBook:[NSURL URLWithString:self.curURL]];
+                [self.view bringSubviewToFront:self.toolbar];
+                [self.chapterInfo setHidden:NO];
+                [self saveContent];
+            }
+
             [self setOfflineReading:offlineChapter];
         }
         else
