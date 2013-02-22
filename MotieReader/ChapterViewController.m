@@ -9,7 +9,6 @@
 #import "ChapterViewController.h"
 
 #import "TFHpple.h"
-#import "Tutorial.h"
 #import "OfflineChapterCoreData.h"
 #import "LibraryController.h"
 
@@ -25,33 +24,20 @@
     UIBarButtonItem *saveBtn;
 }
 
-#pragma mark - Managing the detail item
-
-- (void)setDetailItem:(id)newDetailItem
-{
-    if (_detailItem != newDetailItem) {
-        _detailItem = newDetailItem;
-
-        // Update the view.
-        [self configureView];
-    }
-}
-
 - (void)configureView
 {
-    // Update the user interface for the detail item.
-
     [self.detailedWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"about:blank"]]]];
 
-    if (self.detailItem) {
-        NSString *bookURL = [self.detailItem valueForKey:@"url"];
-
-        if ([bookURL hasPrefix:@"http://"])
-            [self.detailedWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[self.detailItem valueForKey:@"url"]]]]];
-        else
-            [self.detailedWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASE_URL,[self.detailItem valueForKey:@"url"]]]]];
-        [self.view addSubview:self.detailedWebView];
+    if (self.isLoadBookInfo)
+    {
+        [self.detailedWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASE_URL,self.curBook.bookURL]]]];
     }
+    else
+    {
+        [self.detailedWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASE_URL,self.curBook.curReadingURL]]]];
+    }
+
+    [self.view addSubview:self.detailedWebView];
 
 }
 
@@ -65,18 +51,16 @@
     [saveBtn setEnabled:NO];
     self.navigationItem.rightBarButtonItem = saveBtn;
 
-    if (self.detailItem) {
+    self.detailedWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-88)];
 
-        self.detailedWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-88)];
+    self.detailedWebView.delegate = self;
 
-        self.detailedWebView.delegate = self;
+    self.detailedWebView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
-        self.detailedWebView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-
-        [self addToolBar];
-    }
-
+    [self addToolBar];
     [self configureView];
+
+
 }
 
 - (void)addToolBar
@@ -84,9 +68,6 @@
     self.toolbar = [[UIToolbar alloc] init];
     self.toolbar.frame = CGRectMake(0, self.view.frame.size.height-88, self.view.frame.size.width, 44);
     [self.toolbar setTintColor:[UIColor lightGrayColor]];
-//    UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-//    UIBarButtonItem *downloadBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(downloadContent)];
-//    [self.toolbar setItems:[NSArray arrayWithObjects:flexibleSpace,downloadBtn, nil]];
     [self.view addSubview:self.toolbar];
 }
 
@@ -685,7 +666,7 @@
             {
                 LibraryController *test = [self.navigationController.viewControllers objectAtIndex:0];
                 test.LibraryURL = [[subElement attributes] valueForKey:@"href"];
-                [test performSelector:@selector(loadTutorials)];
+                [test performSelector:@selector(loadLibrary)];
                 [self.navigationController popViewControllerAnimated:YES];
             }
         }

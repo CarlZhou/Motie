@@ -10,10 +10,12 @@
 #import "MBProgressHUD.h"
 #import "iToast.h"
 #import <Parse/Parse.h>
+#import "LibraryBook.h"
 
 @interface ChapterViewController : UIViewController <UISplitViewControllerDelegate, UIWebViewDelegate, UIGestureRecognizerDelegate, UITextViewDelegate, UIAlertViewDelegate>
 
 @property (strong, nonatomic) id detailItem;
+@property (strong, nonatomic) LibraryBook *curBook;
 
 @property (strong, nonatomic) UIWebView *detailedWebView;
 
@@ -32,7 +34,7 @@
 @property (strong, nonatomic) NSString *curChapterContent;
 
 
-@property BOOL isFullScreen, isChapterAvaliableOffline, isChapterFetchedFromServer;
+@property BOOL isFullScreen, isChapterAvaliableOffline, isChapterFetchedFromServer, isLoadBookInfo;
 
 @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
 

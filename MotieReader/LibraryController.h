@@ -8,18 +8,20 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+#import "LibraryViewCellBtn.h"
 
 @class ChapterViewController;
 
 #import <CoreData/CoreData.h>
 
-@interface LibraryController : UITableViewController <NSFetchedResultsControllerDelegate>
+@interface LibraryController : UITableViewController <NSFetchedResultsControllerDelegate, LibraryViewCellBtnDelegate>
 
 @property (strong, nonatomic) ChapterViewController *detailViewController;
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) NSString *LibraryURL;
+@property (strong, nonatomic) NSMutableArray *libraryBooks;
 
-- (void)loadTutorials;
+- (void)loadLibrary;
 @end

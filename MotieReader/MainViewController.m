@@ -40,7 +40,7 @@
 
     UIImage *bgImage = [[UIImage imageNamed:@"Default-Portrait@2x~ipad.png"] stretchableImageWithLeftCapWidth:768 topCapHeight:1004];
     self.backgroundImageView = [[UIImageView alloc] initWithImage:bgImage];
-    [self.backgroundImageView setFrame:self.view.frame];
+    [self.backgroundImageView setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     [self.view addSubview:self.backgroundImageView];
     [self loadMainPage:MAIN_PAGE];
 }
@@ -121,16 +121,6 @@
     }
 }
 
-//- (void)webViewDidStartLoad:(UIWebView *)webView
-//{
-//    if ([[[[webView request] mainDocumentURL] query] hasPrefix:@"sd="])
-//    {
-//        [self.mainWebView removeFromSuperview];
-//        [self showProgressHUD:@"Logging" time:0];
-//        [self loadMainPage:MAIN_PAGE];
-//    }
-//}
-
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     if ([[[request mainDocumentURL] path] hasPrefix:@"/accounts/"])
@@ -145,15 +135,6 @@
     else
         return NO;
 }
-
-//- (void)webViewDidFinishLoad:(UIWebView *)webView
-//{
-//    if ([[[[webView request] mainDocumentURL] query] hasPrefix:@"sd="])
-//    {
-//        [self.mainWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"about:blank"]]];
-//        [self loadMainPage:MAIN_PAGE];
-//    }
-//}
 
 #pragma mark ProgressHUD
 
