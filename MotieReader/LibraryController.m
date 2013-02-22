@@ -12,27 +12,46 @@
 
 #import "TFHpple.h"
 
+#import "UIUtil.h"
+
 @interface LibraryController () {
 }
 @end
 
 @implementation LibraryController
+{
+    PullToRefreshView *pull;
+    NSArray *updatedLibrary;
+}
 
 @synthesize detailViewController = _detailViewController;
 
 - (void)loadLibrary
 {
+    if (![[UIUtil sharedInstance] isNetWorkAvailable])
+    {
+        [[[[iToast makeText:NSLocalizedString(@"Network is not avaliable, Please check internet connection.", @"")]
+           setGravity:iToastGravityCenter] setDuration:1000] show];
+        [pull finishedLoading];
+        return;
+    }
+
+    [self performSelectorInBackground:@selector(loadLibraryFromServer) withObject:nil];
+}
+
+- (void)loadLibraryFromServer
+{
     // 1
     NSURL *libraryUrl = [NSURL URLWithString:self.LibraryURL];
     NSData *libraryHtmlData = [NSData dataWithContentsOfURL:libraryUrl];
-
+    
     // 2
     TFHpple *libraryParser = [TFHpple hppleWithHTMLData:libraryHtmlData];
-
+    
     // 3
     NSString *libraryXpathQueryString = @"//div[@class='txtbox-item']/a";
     NSArray *libraryNodes = [libraryParser searchWithXPathQuery:libraryXpathQueryString];
-
+    
     NSMutableArray *libraryBooks = [NSMutableArray array];
     LibraryBook *book;
     NSUInteger count = 0;
@@ -66,9 +85,10 @@
             }
         }
     }
-
-    self.libraryBooks = libraryBooks;
+    updatedLibrary = libraryBooks;
+    self.libraryBooks = [updatedLibrary mutableCopy];
     [self.tableView reloadData];
+    [pull finishedLoading];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -84,8 +104,12 @@
 
     self.title = @"Motie";
     self.libraryBooks = [NSMutableArray array];
-    [self loadLibrary];
-    //    [self loadContributors];
+    
+    pull = [[PullToRefreshView alloc] initWithScrollView:(UIScrollView *) self.tableView];
+    [pull setDelegate:self];
+    [self.tableView addSubview:pull];
+    
+    [self loadLibraryFromServer];
 }
 
 - (void)viewDidUnload
@@ -163,6 +187,30 @@
     detailViewController.curBook = book;
     detailViewController.isLoadBookInfo = YES;
     [self.navigationController pushViewController:detailViewController animated:YES];
+}
+
+#pragma mark - PullToRefresh
+- (void)pullToRefreshViewShouldRefresh:(PullToRefreshView *)view;
+{
+    [self loadLibrary];
+}
+
+#pragma mark - ProgressHUD
+- (void)showProgressHUD:(NSString *)message time:(NSUInteger)time
+{
+    self.progressHUD = [[MBProgressHUD alloc] initWithView:self.view];
+    self.progressHUD.mode = MBProgressHUDModeIndeterminate;
+    self.progressHUD.labelText = message;
+    if (time != 0)
+        self.progressHUD.graceTime = time;
+    [self.view addSubview:self.progressHUD];
+    [self.progressHUD show:YES];
+}
+
+- (void)hideProgressHUD
+{
+    [self.progressHUD hide:YES];
+    self.progressHUD = nil;
 }
 
 @end

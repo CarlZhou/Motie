@@ -11,6 +11,7 @@
 #import "LibraryController.h"
 #import "MainViewController.h"
 #import <Parse/Parse.h>
+#import "UIUtil.h"
 
 @implementation AppDelegate
 
@@ -31,10 +32,17 @@
 //    else
 //    {
 
+
     MainViewController *mainView = [[MainViewController alloc] init];
     [self.window setRootViewController:mainView];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+    
+    self.hostReach = [Reachability reachabilityWithHostName: @"m.motie.com"];
+    [self.hostReach startNotifier];
+    
     [self.window makeKeyAndVisible];
+    
     //[self.window addSubview:mainView.view];
 //    }
 
@@ -181,6 +189,18 @@
 - (NSURL *)applicationDocumentsDirectory
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+#pragma mark - Reachability
+- (void) reachabilityChanged: (NSNotification* )note
+{
+    NetworkStatus netStatus = [self.hostReach currentReachabilityStatus];
+    [UIUtil sharedInstance].isNetWorkAvailable = netStatus;
+}
+
+- (void) updateInterfaceWithReachability
+{
+    
 }
 
 @end

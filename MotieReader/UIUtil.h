@@ -10,6 +10,11 @@
 
 @interface UIUtil : NSObject
 
+@property BOOL isNetWorkAvailable;
+
 + (void)showAlertWithTitle:(NSString *)title andMessage:(NSString *)message;
+
+// Shared Instance
++ (UIUtil *)sharedInstance;
 
 @end

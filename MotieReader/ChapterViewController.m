@@ -7,10 +7,9 @@
 //
 
 #import "ChapterViewController.h"
-
 #import "TFHpple.h"
 #import "OfflineChapterCoreData.h"
-#import "LibraryController.h"
+#import "UIUtil.h"
 
 #define BASE_URL @"http://m.motie.com"
 
@@ -59,8 +58,6 @@
 
     [self addToolBar];
     [self configureView];
-
-
 }
 
 - (void)addToolBar
@@ -587,7 +584,6 @@
     }
     else
     {
-        NSLog(@"%@",array);
         if (array.count != 0)
         {
             OfflineChapterCoreData *offlineChapter = [array objectAtIndex:0];
@@ -595,6 +591,13 @@
         }
         else
         {
+            if (![[UIUtil sharedInstance] isNetWorkAvailable])
+            {
+                [[[[iToast makeText:NSLocalizedString(@"Network is not avavilable, and Chapter Content is not downloaded", @"")]
+                   setGravity:iToastGravityCenter] setDuration:1000] show];
+                return;
+            }
+            
             self.isChapterFetchedFromServer = NO;
             [self loadBook:[NSURL URLWithString:self.curURL]];
             [self.view bringSubviewToFront:self.toolbar];

@@ -22,4 +22,16 @@
     });
 }
 
+#pragma mark - Shared Instance
+
++ (UIUtil *)sharedInstance
+{
+    static UIUtil *sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[UIUtil alloc] init];
+    });
+    return sharedInstance;
+}
+
 @end

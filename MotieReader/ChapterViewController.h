@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MBProgressHUD.h"
 #import "iToast.h"
 #import <Parse/Parse.h>
 #import "LibraryBook.h"
+#import "LibraryController.h"
 
 @interface ChapterViewController : UIViewController <UISplitViewControllerDelegate, UIWebViewDelegate, UIGestureRecognizerDelegate, UITextViewDelegate, UIAlertViewDelegate>
 
