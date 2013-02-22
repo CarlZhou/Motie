@@ -57,6 +57,11 @@
     {
         [self presentLibrary];
     }
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"notFirstEnterLibrary"] && ![[UIUtil sharedInstance] isNetWorkAvailable])
+    {
+
+    }
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated

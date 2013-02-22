@@ -123,6 +123,13 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [UIUtil sharedInstance].oldLibraryBooksData = self.libraryBooks;
+
+    // first Enter Library
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"notFirstEnterLibrary"])
+    {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"notFirstEnterLibrary"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
