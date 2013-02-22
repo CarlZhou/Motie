@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class MBProgressHUD;
+
 @interface MainViewController : UIViewController <UIWebViewDelegate>
 
 @property (nonatomic, strong) UIWebView *mainWebView;
 
 @property (nonatomic, strong) NSString *URL;
 @property (nonatomic, strong) UIImageView *backgroundImageView;
+@property (strong, nonatomic) MBProgressHUD *progressHUD;
 
 @end

@@ -9,6 +9,7 @@
 #import "MainViewController.h"
 #import "TFHpple.h"
 #import "LibraryController.h"
+#import "MBProgressHUD.h"
 
 #define MAIN_PAGE @"http://m.motie.com/"
 #define LOGIN_PAGE @"http://m.motie.com/accounts/login"
@@ -53,6 +54,11 @@
     }
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self hideProgressHUD];
+}
+
 - (void)viewDidDisappear:(BOOL)animated
 {
     viewDidShown = NO;
@@ -88,13 +94,8 @@
     NSString *URLXpathQueryString = @"//p[@class='not-login']";
     NSArray *urlInfoNodes = [URLParser searchWithXPathQuery:URLXpathQueryString];
 
-    // 4
-    for (TFHppleElement *element in urlInfoNodes) {
-
-    }
     if (urlInfoNodes.count != 0)
     {
-        [self.backgroundImageView removeFromSuperview];
         self.mainWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
         self.mainWebView.delegate = self;
         self.mainWebView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -120,14 +121,57 @@
     }
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView
+//- (void)webViewDidStartLoad:(UIWebView *)webView
+//{
+//    if ([[[[webView request] mainDocumentURL] query] hasPrefix:@"sd="])
+//    {
+//        [self.mainWebView removeFromSuperview];
+//        [self showProgressHUD:@"Logging" time:0];
+//        [self loadMainPage:MAIN_PAGE];
+//    }
+//}
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    if ([[[[webView request] mainDocumentURL] query] hasPrefix:@"sd="])
+    if ([[[request mainDocumentURL] path] hasPrefix:@"/accounts/"])
+        return YES;
+    else if ([[[request mainDocumentURL] query] hasPrefix:@"sd="])
     {
-        [self.mainWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"about:blank"]]];
+        [self.mainWebView removeFromSuperview];
+        [self showProgressHUD:@"Logging" time:0];
         [self loadMainPage:MAIN_PAGE];
+        return YES;
     }
+    else
+        return NO;
 }
 
+//- (void)webViewDidFinishLoad:(UIWebView *)webView
+//{
+//    if ([[[[webView request] mainDocumentURL] query] hasPrefix:@"sd="])
+//    {
+//        [self.mainWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"about:blank"]]];
+//        [self loadMainPage:MAIN_PAGE];
+//    }
+//}
+
+#pragma mark ProgressHUD
+
+- (void)showProgressHUD:(NSString *)message time:(NSUInteger)time
+{
+    self.progressHUD = [[MBProgressHUD alloc] initWithView:self.view];
+    self.progressHUD.mode = MBProgressHUDModeIndeterminate;
+    self.progressHUD.labelText = message;
+    if (time != 0)
+        self.progressHUD.graceTime = time;
+    [self.view addSubview:self.progressHUD];
+    [self.progressHUD show:YES];
+}
+
+- (void)hideProgressHUD
+{
+    [self.progressHUD hide:YES];
+    self.progressHUD = nil;
+}
 
 @end
