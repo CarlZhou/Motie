@@ -64,6 +64,7 @@
 		C395813016D5C269009EE15E /* iToast.m in Sources */ = {isa = PBXBuildFile; fileRef = C395812F16D5C269009EE15E /* iToast.m */; };
 		C395813416D5C539009EE15E /* UIUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = C395813316D5C539009EE15E /* UIUtil.m */; };
 		C395813716D7DC8C009EE15E /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C395813616D7DC8C009EE15E /* Reachability.m */; };
+		C395816B16D82318009EE15E /* mobile-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = C395816A16D82318009EE15E /* mobile-logo.png */; };
 		FF7DE6C6C345037B741FABED /* LibraryBook.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7DEACF3CA655B6EF111A55 /* LibraryBook.m */; };
 /* End PBXBuildFile section */
 
@@ -142,6 +143,7 @@
 		C395813316D5C539009EE15E /* UIUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIUtil.m; path = MotieReader/UIUtil.m; sourceTree = "<group>"; };
 		C395813516D7DC8C009EE15E /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		C395813616D7DC8C009EE15E /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		C395816A16D82318009EE15E /* mobile-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mobile-logo.png"; sourceTree = "<group>"; };
 		FF7DEA746DC705136D43EF04 /* LibraryBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryBook.h; sourceTree = "<group>"; };
 		FF7DEACF3CA655B6EF111A55 /* LibraryBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LibraryBook.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -192,6 +194,7 @@
 		8E7564ED16D6C98C00D4EE0D /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				C395816A16D82318009EE15E /* mobile-logo.png */,
 				8E75654216D71D4300D4EE0D /* ButtonImage */,
 				8E75650316D6CC7600D4EE0D /* LauchImage */,
 				8E7564FA16D6C9BD00D4EE0D /* Icon */,
@@ -459,6 +462,7 @@
 				2E7B1037204B4BE3583CD108 /* arrow@2x.png in Resources */,
 				2E7B19566C2BC15814CC9CCB /* pop.wav in Resources */,
 				2E7B152D387E15137DC2850D /* psst1.wav in Resources */,
+				C395816B16D82318009EE15E /* mobile-logo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

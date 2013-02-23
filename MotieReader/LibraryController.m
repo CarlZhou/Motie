@@ -104,6 +104,13 @@
 
     self.title = @"Motie";
     self.libraryBooks = [NSMutableArray array];
+    
+    UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 34)];
+    UIImage *headBg = [[UIImage imageNamed:@"mobile-logo.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+    UIImageView *headImage = [[UIImageView alloc] initWithFrame:headView.frame];
+    [headImage setImage:headBg];
+    [headView addSubview:headImage];
+    [self.tableView setTableHeaderView:headView];
 
     pull = [[PullToRefreshView alloc] initWithScrollView:(UIScrollView *) self.tableView];
     [pull setDelegate:self];

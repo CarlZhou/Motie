@@ -32,7 +32,6 @@
 //    else
 //    {
 
-    [[NSUserDefaults standardUserDefaults] synchronize];
 
     MainViewController *mainView = [[MainViewController alloc] init];
     [self.window setRootViewController:mainView];
