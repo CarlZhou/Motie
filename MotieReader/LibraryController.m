@@ -44,14 +44,14 @@
     // 1
     NSURL *libraryUrl = [NSURL URLWithString:self.LibraryURL];
     NSData *libraryHtmlData = [NSData dataWithContentsOfURL:libraryUrl];
-    
+
     // 2
     TFHpple *libraryParser = [TFHpple hppleWithHTMLData:libraryHtmlData];
-    
+
     // 3
     NSString *libraryXpathQueryString = @"//div[@class='txtbox-item']/a";
     NSArray *libraryNodes = [libraryParser searchWithXPathQuery:libraryXpathQueryString];
-    
+
     NSMutableArray *libraryBooks = [NSMutableArray array];
     LibraryBook *book;
     NSUInteger count = 0;
@@ -105,11 +105,35 @@
     self.title = @"Motie";
     self.libraryBooks = [NSMutableArray array];
     
+    UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 34)];
+    UIImage *headBg = [[UIImage imageNamed:@"mobile-logo.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+    UIImageView *headImage = [[UIImageView alloc] initWithFrame:headView.frame];
+    [headImage setImage:headBg];
+    [headView addSubview:headImage];
+    [self.tableView setTableHeaderView:headView];
+
     pull = [[PullToRefreshView alloc] initWithScrollView:(UIScrollView *) self.tableView];
     [pull setDelegate:self];
     [self.tableView addSubview:pull];
-    
-    [self loadLibraryFromServer];
+
+    if ([[UIUtil sharedInstance] isNetWorkAvailable])
+        [self loadLibraryFromServer];
+    else
+    {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSData *myEncodedObject = [defaults objectForKey:@"oldLibraryBooks"];
+        self.libraryBooks = (NSMutableArray *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
+        [self.tableView reloadData];
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [UIUtil sharedInstance].oldLibraryBooksData = self.libraryBooks;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
 }
 
 - (void)viewDidUnload

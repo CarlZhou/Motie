@@ -10,6 +10,7 @@
 #import "TFHpple.h"
 #import "LibraryController.h"
 #import "MBProgressHUD.h"
+#import "UIUtil.h"
 
 #define MAIN_PAGE @"http://m.motie.com/"
 #define LOGIN_PAGE @"http://m.motie.com/accounts/login"
@@ -22,6 +23,7 @@
 @implementation MainViewController
 {
     BOOL viewDidShown;
+    UIView *errorView;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -52,6 +54,15 @@
     {
         [self presentLibrary];
     }
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"oldLibraryBooks"])
+    {
+        [self presentLibrary];
+    }
+    else if (![[UIUtil sharedInstance] isNetWorkAvailable])
+    {
+        [self presentLibrary];
+    }
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated

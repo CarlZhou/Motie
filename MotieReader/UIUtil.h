@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LibraryBook.h"
 
 @interface UIUtil : NSObject
 
@@ -16,5 +17,7 @@
 
 // Shared Instance
 + (UIUtil *)sharedInstance;
+
+@property (nonatomic, strong) NSMutableArray *oldLibraryBooksData;
 
 @end
