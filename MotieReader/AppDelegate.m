@@ -35,14 +35,14 @@
 
     MainViewController *mainView = [[MainViewController alloc] init];
     [self.window setRootViewController:mainView];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
-    
+
     self.hostReach = [Reachability reachabilityWithHostName: @"m.motie.com"];
     [self.hostReach startNotifier];
-    
+
     [self.window makeKeyAndVisible];
-    
+
     //[self.window addSubview:mainView.view];
 //    }
 
@@ -70,6 +70,10 @@
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
+    NSUserDefaults *currentDefaults = [NSUserDefaults standardUserDefaults];
+    NSData *myEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:[[UIUtil sharedInstance] oldLibraryBooksData]];
+    [currentDefaults setObject:myEncodedObject forKey:@"oldLibraryBooks"];
+    [currentDefaults synchronize];
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
@@ -93,7 +97,14 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Saves changes in the application's managed object context before the application terminates.
+
+    NSUserDefaults *currentDefaults = [NSUserDefaults standardUserDefaults];
+    NSData *myEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:[[UIUtil sharedInstance] oldLibraryBooksData]];
+    [currentDefaults setObject:myEncodedObject forKey:@"oldLibraryBooks"];
+    [currentDefaults synchronize];
+
     [self saveContext];
+
 }
 
 - (void)saveContext
@@ -200,7 +211,7 @@
 
 - (void) updateInterfaceWithReachability
 {
-    
+
 }
 
 @end
